@@ -1,0 +1,40 @@
+.header{
+ width: 100%;
+ background-color: var(--body-background);
+ color: var(--body-color);
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem;
+        border-bottom: 1px solid black;
+        align-items: center;
+        text-align: center;
+    }
+
+
+
+    .user__avatar {
+        position: relative;
+        background-color: rgb(61, 155, 192);
+        padding: 0.4rem;
+        border-radius: 10px;
+        cursor: pointer!important;
+      
+    }
+
+    .user__options {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+        position: absolute;
+        background-color: darkcyan;
+        width: 200px;
+        height: 500px;
+        // top: 35px;
+        // left: -50px;
+        right: 60px;
+        top: 40px;
+        padding: 0.4rem;
+        border-radius: 10px;
+    }
+}

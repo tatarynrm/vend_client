@@ -1,0 +1,13 @@
+.form__control {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+
+input {
+    padding: 0.4rem;
+}
+}
+
