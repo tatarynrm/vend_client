@@ -13,7 +13,7 @@ function App() {
   const userData = useSelector(state => state.auth.data)
   useEffect(() => {
     dispatch(fetchAuthMe());
-  }, [dispatch,token]);
+  }, []);
   useEffect(()=>{},[userData])
   return (
     <div className="vendmarket">

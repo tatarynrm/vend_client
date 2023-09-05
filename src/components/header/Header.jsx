@@ -27,7 +27,7 @@ const Header = () => {
             onClick={() => setUserOptions((val) => !val)}
             className="user__avatar"
           >
-            {userData?.name.charAt(0)}.{userData?.surname}
+            {userData?.name?.charAt(0)}.{userData?.surname}
           </div>
         ) : null}
         {userOptions && (
