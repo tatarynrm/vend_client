@@ -4,7 +4,7 @@ import DarkMode from "../darkMode/DarkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutFromAccount } from "../../services/userServices";
 import { logout } from "../../redux/slices/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +20,20 @@ const Header = () => {
     <header className="header">
       <div className="header__inner container">
         {userData ? <div className="logo">LOGO</div> : null}
-        {userData ? <div className="navigation">NAVIGATION</div> : null}
+        {userData ? (
+          <div className="navigation">
+            {userData?.role === 1 ? (
+              <div className="header__menu header__menu-admin">
+                <Link to={'/users'} className="normal">Користувачі</Link>
+                <Link to={'/clients'} className="normal">Клієнти</Link>
+                <Link to={'/machines'} className="normal">Апарати</Link>
+                <Link to={'/sms'} className="normal">SMS</Link>
+              </div>
+            ) : (
+              <div className="header__menu header__menu-user"></div>
+            )}
+          </div>
+        ) : null}
         <DarkMode />
         {userData ? (
           <div

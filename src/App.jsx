@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import Login from "./pages/Login/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe } from "./redux/slices/auth";
+import Admin from "./pages/Admin/Admin";
+import Users from "./pages/Users/Users";
+import Clients from "./pages/Clients/Clients";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -24,6 +27,9 @@ function App() {
           <Route exact path="/login" element={<Login/>} />
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/clients" element={<Clients />} />
           </Route>
         </Routes>
       </div>

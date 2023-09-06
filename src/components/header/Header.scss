@@ -38,3 +38,14 @@
         border-radius: 10px;
     }
 }
+
+.header__menu{
+ 
+    button {
+        color: var(--body-color);
+    }
+    &-admin {
+        display: flex;
+        gap: 20px;
+    }
+}
