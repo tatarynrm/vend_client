@@ -43,6 +43,9 @@ const Users = () => {
                 <div>{item.password}</div>
                 <div>{item.tel}</div>
                 <div>{item.company_id? "Підключено" : "Не підключено"}</div>
+                <div>
+                  <button className="normal">Переглянути/Змінити</button>
+                </div>
               </div>
             );
           })

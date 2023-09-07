@@ -1,0 +1,33 @@
+ALL USERS:
+
+reboot gsm module	reboot		pin=1111;reboot;
+
+set price for product	setprice	price in cents	pin=1111;setprice:1=150; // price in cents (150 = 1.5 uah)
+
+add liters of water	addlits	add liters	pin=1111;addlits=12; // add 12 liters
+
+collect cash 	collect		pin=1111;collect;
+
+
+
+
+ADMIN
+reboot gsm module	reboot		pin=1111;reboot;
+
+set price for product	setprice	price in cents	pin=1111;setprice:1=150; // price in cents (150 = 1.5 uah)
+
+add liters of water	addlits	add liters	pin=1111;addlits=12; // add 12 liters
+
+collect cash 	collect		pin=1111;collect;
+
+get information of settings	getinfo		pin=1111;getinfo;
+
+reboot gsm module	reboot		pin=1111;reboot;
+
+set pin 	setpin	new pin	pin=1111;setpin=1234;
+
+set anthill address	setantaddr	point number	pin=1111;setantaddr=1;
+
+set anthill token	settok	point token	pin=1111;settok=4IlbtWYBkoSKyB6zd0IrMn8KV;
+
+set telephone 	settelnum	telephone number	pin=1111;settelnum:1=380000000000; // 3 tel available

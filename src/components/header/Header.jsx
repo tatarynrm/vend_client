@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import DarkMode from "../darkMode/DarkMode";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutFromAccount } from "../../services/userServices";
 import { logout } from "../../redux/slices/auth";
 import { Link, useNavigate } from "react-router-dom";
 const Header = () => {
@@ -18,7 +17,7 @@ const Header = () => {
   };
   return (
     <header className="header">
-      <div className="header__inner container">
+      <div     className="header__inner container">
         {userData ? <div className="logo">
           <Link className="normal" to={'/'} >VEND MARKET</Link>
         </div> : null}
@@ -32,7 +31,9 @@ const Header = () => {
                 <Link to={'/sms'} className="normal">SMS</Link>
               </div>
             ) : (
-              <div className="header__menu header__menu-user"></div>
+              <div className="header__menu header__menu-user">
+                <Link to={'/my-machines'} className="normal">Мої апарати</Link>
+              </div>
             )}
           </div>
         ) : null}
