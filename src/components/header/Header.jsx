@@ -19,7 +19,9 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__inner container">
-        {userData ? <div className="logo">LOGO</div> : null}
+        {userData ? <div className="logo">
+          <Link className="normal" to={'/'} >VEND MARKET</Link>
+        </div> : null}
         {userData ? (
           <div className="navigation">
             {userData?.role === 1 ? (

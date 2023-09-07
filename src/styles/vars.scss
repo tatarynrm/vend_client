@@ -20,7 +20,7 @@
     --button-main: rgb(76, 135, 202);
     --color-white: white;
     --color-black: black;
-    --body-background: #282c34;
+    --body-background: rgba(6, 23, 48, 0.9);
     --body-color: white;
     --link-color: cyan;
     --border-color: white;
@@ -34,6 +34,3 @@
     --reverse-color:white;
   }
   
-  * {
-    transition: all 0.1s ease;
-  }

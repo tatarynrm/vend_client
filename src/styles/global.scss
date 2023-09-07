@@ -15,8 +15,16 @@ a {
     text-align: center;
     justify-content: space-between;
 
+label  {
+    color: var(--body-color);
+}
+
 input {
     padding: 0.4rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    // background-color: transparent;
 }
 }
 

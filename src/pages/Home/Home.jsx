@@ -4,7 +4,7 @@ const Home = () => {
 
   return (
     <div className="home page">
-      <div className="home__inner container">Головна сторінка</div>
+      <div className="home__inner container"></div>
 
     </div>
   );

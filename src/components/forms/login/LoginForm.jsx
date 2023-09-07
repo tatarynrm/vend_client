@@ -38,7 +38,7 @@ const LoginForm = () => {
   return (
     <form onSubmit={signIn} className="login__form">
       <div className="form__control">
-        <label>Login</label>
+        {/* <label>Login</label> */}
         <input
           type="text"
           placeholder="E-mail"
@@ -47,7 +47,7 @@ const LoginForm = () => {
         />
       </div>
       <div className="form__control">
-        <label>Password</label>
+        {/* <label>Password</label> */}
         <input
           type="pasword"
           placeholder="Password"
@@ -56,7 +56,7 @@ const LoginForm = () => {
         />
       </div>
 
-      <button className="normal">Увійти</button>
+      <button type="submit" className="normal">Увійти</button>
     </form>
   );
 };

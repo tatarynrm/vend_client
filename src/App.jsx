@@ -9,30 +9,29 @@ import { fetchAuthMe } from "./redux/slices/auth";
 import Admin from "./pages/Admin/Admin";
 import Users from "./pages/Users/Users";
 import Clients from "./pages/Clients/Clients";
+import SideBar from "./components/sidebar/SideBar";
 
 function App() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.auth.data)
+  const userData = useSelector((state) => state.auth.data);
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, []);
-  useEffect(()=>{},[userData])
+  useEffect(() => {}, [userData]);
   return (
     <div className="vendmarket">
       {userData ? <Header /> : null}
 
-      <div className="main__content">
-        <Routes>
-          <Route exact path="/login" element={<Login/>} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/clients" element={<Clients />} />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route exact path="/login" element={<Login />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/clients" element={<Clients />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
