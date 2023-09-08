@@ -49,6 +49,7 @@ const Users = () => {
             <div className="name">Пароль</div>
             <div className="name">Номер телефону</div>
             <div className="name">Компанія</div>
+            <div className="name">Редагувати</div>
           </div>
         )}
 

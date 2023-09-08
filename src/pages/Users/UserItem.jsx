@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcHighPriority } from "react-icons/fc";
 const UserItem = ({ item }) => {
+  const [collapse, setCollapse] = useState(false);
   return (
     <React.Fragment>
       <div className={`user user-${item.id}`}>
@@ -18,9 +19,12 @@ const UserItem = ({ item }) => {
           )}
         </div>
         <div>
-          <button className="normal">Переглянути/Змінити</button>
+          <button onClick={() => setCollapse((val) => !val)} className="normal">
+            {collapse ? "Приховати": "Переглянути/Змінити"} 
+          </button>
         </div>
       </div>
+      {collapse && <div className="user__functions">......</div>}
     </React.Fragment>
   );
 };

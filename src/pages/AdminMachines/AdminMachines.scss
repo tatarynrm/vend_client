@@ -1,1 +1,19 @@
-.machines__inner {}
+.admin__machines__inner{
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin__machine-item{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    text-align: left;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    padding: 0.4rem;
+    border-radius: 2px;
+    cursor: context-menu;
+    height: 60px;
+}
