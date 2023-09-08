@@ -1,0 +1,114 @@
+.machines__block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.water__machine{
+    position: relative;
+    height: 200px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+text-align: center;
+gap: 20px;
+background-color: rgba(100, 96, 96, 0.4);
+box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+padding: 0.4rem;
+border-radius: 20px;
+    &-icon {
+        width: 200px;
+        height: 100%;
+        img {
+           background-size: contain;
+           background-position: center;
+           height: 100%;
+           width: 100%;
+        }
+    }
+    &-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+.collapse__machine {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    // transform:rotate(180deg);
+    cursor:pointer;
+}
+
+
+.water__bottom-menu {
+    background-color: rgba(128, 119, 119,0.4);
+    padding: 0.4rem;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+
+   
+
+
+    &-control {
+        display: flex;
+        gap: 10px;
+        border: 1px solid rgb(231, 227, 227);
+        border-radius: 10px;
+        padding: 0.4rem;
+
+        input {
+            width: 60px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// MEDIA
+@media screen  and (max-width: 768px) { 
+    .machines__block {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .water__machine{ 
+
+    }
+
+}
+@media screen  and (max-width: 516px) { 
+    .machines__block {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .water__machine{ 
+
+    }
+.water__bottom-menu{
+    display: flex;
+    flex-direction: column;
+}
+}

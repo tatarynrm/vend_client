@@ -15,7 +15,6 @@ const sendMsg = async ()=>{
       <div className="home__inner container"></div>
 
 
-<button onClick={sendMsg}>Onclick</button>
     </div>
   );
 };

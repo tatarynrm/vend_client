@@ -11,6 +11,8 @@ import Users from "./pages/Users/Users";
 import Clients from "./pages/Clients/Clients";
 import SideBar from "./components/sidebar/SideBar";
 import SmsPage from "./pages/SmsPage/SmsPage";
+import Machine from "./pages/Machines/Machine";
+import AdminMachines from "./pages/AdminMachines/AdminMachines";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -35,8 +37,11 @@ function App() {
               <Route path="/users" element={<Users />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/sms" element={<SmsPage />} />
+              <Route path="/machines" element={<AdminMachines />} />
             </>
-          ) : null}
+          ) : 
+          <Route path="/my-machines" element={<Machine />} />
+          }
         </Route>
       </Routes>
     </div>

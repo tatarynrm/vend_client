@@ -1,11 +1,12 @@
 .normal {
-    background-color: rgb(30 64 160);;
+    background-color: rgb(49, 66, 110);;
     border: 1px solid rgb(82, 203, 224);
-    padding: 0.4rem;
+    padding: 0.6rem;
     // border-radius: 10px;
     cursor: pointer!important;
     transition: all 0.4s ease;
     color: var(--body-color);
+    border-radius: 7px;
 }
 
 .normal:hover{
