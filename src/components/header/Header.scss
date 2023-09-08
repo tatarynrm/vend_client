@@ -23,6 +23,7 @@
     flex-direction: column;
     gap: 30px;
         position: absolute;
+        z-index: 999999;
         background-color: darkcyan;
         width: 200px;
         height: 500px;
@@ -77,4 +78,11 @@
         .dark_mode {
             display: none;
         }
+}
+
+@media screen  and (max-width: 400px) {
+.header__inner {
+    font-size: 12px;
+}
+
 }
