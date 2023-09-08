@@ -15,6 +15,8 @@ const sendMsg = async ()=>{
       <div className="home__inner container"></div>
 
 
+{/* <button onClick={sendMsg}>Провірити</button> */}
+
     </div>
   );
 };
