@@ -5,9 +5,9 @@ const AddMachineForm = () => {
     const [resultMsg, setResultMsg] = useState("");
     const [companies, setCompanies] = useState([]);
     const [formData, setFormData] = useState({
-      machine_id: "",
+      machine_id: null,
       address: "",
-      company_id: "",
+      company_id: "" || null,
       machine_phone: "",
       terminal_sim: "",
       machine_pin: "",
@@ -18,8 +18,8 @@ const AddMachineForm = () => {
         e.preventDefault();
         try {
             if (
-                formData.machine_id === "" 
-                // formData.address === "" ||
+                formData.machine_id === "" ||
+                formData.address === ""
                 // formData.company_id === "" ||
                 // formData.machine_phone === "" ||
                 // formData.terminal_sim === "" ||
@@ -30,9 +30,9 @@ const AddMachineForm = () => {
               } else {
                 const data = await axios.post("/machine/new-machine", formData);
                 if (data.status === 200) {
-                  setResultMsg("Створено клієнта");
+                  setResultMsg("Створено апарат");
                 } else if (data.status === 201) {
-                  setResultMsg("Клієнт з таким ІПН / ЄРДПОУ вже існує");
+                  setResultMsg("Апарат з таким кодом вже існує");
                 }
               }
         } catch (error) {
@@ -53,6 +53,7 @@ const AddMachineForm = () => {
           type="text"
           name="machine_id"
           placeholder="Код апарату"
+          required={true}
           value={formData.machine_id}
           onChange={handleInputChange}
         />
@@ -61,6 +62,7 @@ const AddMachineForm = () => {
         <input
           type="text"
           name="address"
+          required={true}
           placeholder="Адреса"
           value={formData.address}
           onChange={handleInputChange}
@@ -80,6 +82,7 @@ const AddMachineForm = () => {
           type="text"
           name="machine_phone"
           placeholder="Сім.номер терміналу"
+          required={true}
           value={formData.machine_phone}
           onChange={handleInputChange}
         />
@@ -103,6 +106,14 @@ const AddMachineForm = () => {
         />
       </div>
       <button className='normal'>Додати апарат</button>
+      {resultMsg && (
+        <span
+          style={{ color: resultMsg.includes("Створено") ? "green" : "red" }}
+        >
+          {resultMsg}
+        </span>
+      )}
+
     </form>
   )
 }

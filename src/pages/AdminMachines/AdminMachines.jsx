@@ -26,6 +26,7 @@ const [addNewMachine,setAddNewMachine] = useState(false)
   return (
     <div className="admin-machines page">
       <div className="admin__machines__inner container">
+
       {addNewMachine ? (
           <AiFillCloseCircle
             onClick={() => setAddNewMachine((val) => !val)}
@@ -40,6 +41,18 @@ const [addNewMachine,setAddNewMachine] = useState(false)
           />
         )}
          {addNewMachine ? <AddMachineForm /> : null}
+         {allMachines.length > 0
+          ?<div className="machine__header-menu">
+            <div className="machine__id">#</div>
+            <div>№ Апарату</div>
+            <div>Адреса</div>
+            <div>Моб.тел апарату</div>
+            <div>Пін код</div>
+            <div>Компанія</div>
+            <div>Сервісний номер</div>
+            <div></div>
+          </div>
+          : null}
         {allMachines.length > 0
           ? allMachines
               ?.filter((val) => val.machine_id !== null)

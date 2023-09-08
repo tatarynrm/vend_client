@@ -8,12 +8,37 @@
 
 .admin__machine-item{
     display: flex;
-    gap: 30px;
+    gap: 20px;
     align-items: center;
     text-align: left;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     padding: 0.4rem;
     border-radius: 2px;
     cursor: context-menu;
-    height: 60px;
+    height: 70px;
+    
+.machine__id{
+    width: 40px;
+}
+    div {
+        width: 250px;
+        display: flex;
+        text-align: left;
+        align-items: center;
+    }
+}
+
+.machine__header-menu{
+    display: flex;
+    text-align: left;
+    align-items: center;
+    .machine__id{
+        width: 40px;
+    }
+    div {
+        width: 250px;
+        display: flex;
+        text-align: left;
+        align-items: center;
+    }
 }
