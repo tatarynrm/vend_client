@@ -9,6 +9,7 @@ import AddClientForm from "../../components/forms/client/AddClientForm";
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [addNewClient, setAddNewClient] = useState(false);
+  const [search, setSearch] = useState("");
   const getAllClients = async () => {
     try {
       const data = await axios("/client");
@@ -40,11 +41,38 @@ const Clients = () => {
             style={{ cursor: "pointer" }}
           />
         )}
-         {addNewClient ? <AddClientForm /> : null}
+        {addNewClient ? <AddClientForm /> : null}
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Пошук"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         {clients ? (
-          clients.map((item, idx) => {
-            return <ClientItem key={idx} item={item} />;
-          })
+          clients
+            .filter((item) =>
+              search.toLocaleLowerCase() === "" ||
+              search.toUpperCase() === "" ||
+              search.charAt(0).toUpperCase() === "" ||
+              search.charAt(0).toLowerCase() === ""
+                ? item
+                : item.company_code.toLowerCase().includes(search) ||
+                  item.company_code.toUpperCase().includes(search) ||
+                  item.company_name.toLowerCase().includes(search) ||
+                  item.company_name.toUpperCase().includes(search) ||
+                  item.director_surname.toLowerCase().includes(search) ||
+                  item.director_surname.toUpperCase().includes(search) ||
+                  item.legal_address.toLowerCase().includes(search) ||
+                  item.legal_address.toUpperCase().includes(search) ||
+                  (item.phone_number !== null &&
+                    item.phone_number.toLowerCase().includes(search)) ||
+                  (item.phone_number !== null &&
+                    item.phone_number.toUpperCase().includes(search))
+            )
+            .map((item, idx) => {
+              return <ClientItem key={idx} item={item} />;
+            })
         ) : (
           <span>Завантаження...</span>
         )}

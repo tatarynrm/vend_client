@@ -1,4 +1,5 @@
 .user{
+    position: relative;
     display: flex;
     gap: 30px;
     align-items: center;
@@ -14,10 +15,21 @@
 
         
     }
+
  
 }
 
-
+.user__functions{
+    position: relative;
+    
+    .created__at {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        font-size: 12px;
+       
+    }
+}
 .users__list {
     display: flex;
     gap: 30px;

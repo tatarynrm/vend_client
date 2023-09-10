@@ -3,7 +3,7 @@ import "./Header.scss";
 import DarkMode from "../darkMode/DarkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,16 +19,16 @@ const Header = () => {
     <header className="header">
       <div     className="header__inner container">
         {userData ? <div className="logo">
-          <Link className="normal" to={'/'} >VEND MARKET</Link>
+          <NavLink className="normal" to={'/'} >VEND MARKET</NavLink>
         </div> : null}
         {userData ? (
           <div className="navigation">
             {userData?.role === 1 ? (
               <div className="header__menu header__menu-admin">
-                <Link to={'/users'} className="normal">Користувачі</Link>
-                <Link to={'/clients'} className="normal">Клієнти</Link>
-                <Link to={'/machines'} className="normal">Апарати</Link>
-                <Link to={'/sms'} className="normal">SMS</Link>
+                <NavLink to={'/users'} className="normal">Користувачі</NavLink>
+                <NavLink to={'/clients'} className="normal">Клієнти</NavLink>
+                <NavLink to={'/machines'} className="normal">Апарати</NavLink>
+                <NavLink to={'/sms'} className="normal">SMS</NavLink>
               </div>
             ) : (
               <div className="header__menu header__menu-user">

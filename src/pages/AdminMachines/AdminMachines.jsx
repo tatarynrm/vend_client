@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./AdminMachines.scss";
 import axios from "../../utils/axios.js";
 import AdminMachineItem from "./AdminMachineItem";
-import {GiVendingMachine} from 'react-icons/gi'
-import {AiFillCloseCircle} from 'react-icons/ai'
+import { GiVendingMachine } from "react-icons/gi";
+import { AiFillCloseCircle } from "react-icons/ai";
 import AddMachineForm from "../../components/forms/machine/AddMachineForm";
 const AdminMachines = () => {
   const [allMachines, setAllMachines] = useState([]);
-const [addNewMachine,setAddNewMachine] = useState(false)
+  const [companies,setCompanies] = useState([])
+  const [addNewMachine, setAddNewMachine] = useState(false);
+  const [search, setSearch] = useState("");
   const getAllMachines = async () => {
     try {
       const data = await axios.get("/machine/all");
@@ -23,11 +25,24 @@ const [addNewMachine,setAddNewMachine] = useState(false)
   useEffect(() => {
     getAllMachines();
   }, []);
+  useEffect(() => {
+    const getAllCompanies = async () => {
+      try {
+        const data = await axios.get("/client");
+        console.log(data);
+        if (data.status === 200) {
+            setCompanies(data.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllCompanies();
+  }, []);
   return (
     <div className="admin-machines page">
       <div className="admin__machines__inner container">
-
-      {addNewMachine ? (
+        {addNewMachine ? (
           <AiFillCloseCircle
             onClick={() => setAddNewMachine((val) => !val)}
             size={40}
@@ -40,9 +55,16 @@ const [addNewMachine,setAddNewMachine] = useState(false)
             style={{ cursor: "pointer" }}
           />
         )}
-         {addNewMachine ? <AddMachineForm /> : null}
-         {allMachines.length > 0
-          ?<div className="machine__header-menu">
+        {addNewMachine ? <AddMachineForm companies={companies} /> : null}
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Пошук"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        {allMachines.length > 0 ? (
+          <div className="machine__header-menu">
             <div className="machine__id">#</div>
             <div>№ Апарату</div>
             <div>Адреса</div>
@@ -52,12 +74,24 @@ const [addNewMachine,setAddNewMachine] = useState(false)
             <div>Сервісний номер</div>
             <div></div>
           </div>
-          : null}
+        ) : null}
         {allMachines.length > 0
           ? allMachines
               ?.filter((val) => val.machine_id !== null)
+              .filter((item) =>
+              search.toLocaleLowerCase() === ""
+                ? item
+                : item.machine_id.toLowerCase().includes(search) ||
+                  item.machine_id.toUpperCase().includes(search) ||
+                  item.company_name.toLowerCase().includes(search) ||
+                  item.company_name.toUpperCase().includes(search) ||
+                  item.machine_phone.toLowerCase().includes(search) ||
+                  item.machine_phone.toUpperCase().includes(search) ||
+                  item.address.toLowerCase().includes(search) ||
+                  item.address.toUpperCase().includes(search) 
+            )
               .map((item, idx) => {
-                return <AdminMachineItem key={idx} idx={idx} item={item} />;
+                return <AdminMachineItem  key={idx} idx={idx} item={item} />;
               })
           : null}
       </div>

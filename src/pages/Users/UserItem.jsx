@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FcHighPriority } from "react-icons/fc";
+import moment from "moment";
+import "moment/locale/uk";
 const UserItem = ({ item }) => {
   const [collapse, setCollapse] = useState(false);
   return (
@@ -20,11 +22,24 @@ const UserItem = ({ item }) => {
         </div>
         <div>
           <button onClick={() => setCollapse((val) => !val)} className="normal">
-            {collapse ? "Приховати": "Переглянути/Змінити"} 
+            {collapse ? "Приховати" : "Переглянути/Змінити"}
           </button>
         </div>
       </div>
-      {collapse && <div className="user__functions">......</div>}
+
+      {collapse && (
+        <div className="user__functions">
+     
+     
+
+
+
+
+     <span className="created__at">
+          Створено: {moment(item.createdAt).format("LLL")}
+          </span>
+        </div>
+      )}
     </React.Fragment>
   );
 };

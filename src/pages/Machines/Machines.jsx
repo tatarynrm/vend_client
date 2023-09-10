@@ -38,6 +38,7 @@ const Machines = () => {
               {smsStatusInfo}
             </span>
           )}
+          
           {machine ? (
             machine.map((item, idx) => {
               return (

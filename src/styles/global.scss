@@ -14,6 +14,14 @@ a {
     align-items: center;
     text-align: center;
     justify-content: space-between;
+    position: relative;
+
+
+    select {
+        width: 100%;
+        height: 100%;
+    }
+
 
 label  {
     color: var(--body-color);
@@ -22,7 +30,7 @@ label  {
 input {
     padding: 0.4rem;
     outline: none;
-    border: none;
+    border: 1px solid var(--body-color);
     border-radius: 10px;
     // background-color: transparent;
 }

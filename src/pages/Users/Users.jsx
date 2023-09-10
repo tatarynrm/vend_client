@@ -8,6 +8,7 @@ import AddUser from "./AddUser";
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [addNewUser, setAddNewUser] = useState(false);
+  const [search, setSearch] = useState("");
   const getAllUsers = async () => {
     try {
       const data = await axios("/user");
@@ -41,7 +42,13 @@ const Users = () => {
           />
         )}
         {addNewUser ? <AddUser /> : null}
-
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Пошук"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         {users.length > 0 && (
           <div className="users__list">
             <div className="name">ПІБ</div>
@@ -54,9 +61,23 @@ const Users = () => {
         )}
 
         {users.length > 0
-          ? users?.filter(item => item.email !== null).map((item, idx) => {
-              return <UserItem key={idx} item={item} />;
-            })
+          ? users
+              ?.filter((item) => item.email !== null)
+              .filter((item) =>
+                search.toLocaleLowerCase() === ""
+                  ? item
+                  : item.name.toLowerCase().includes(search) ||
+                    item.name.toUpperCase().includes(search) ||
+                    item.surname.toLowerCase().includes(search) ||
+                    item.surname.toUpperCase().includes(search) ||
+                    item.email.toLowerCase().includes(search) ||
+                    item.email.toUpperCase().includes(search) ||
+                    item.tel.toLowerCase().includes(search) ||
+                    item.tel.toUpperCase().includes(search) 
+              )
+              .map((item, idx) => {
+                return <UserItem key={idx} item={item} />;
+              })
           : null}
       </div>
     </div>

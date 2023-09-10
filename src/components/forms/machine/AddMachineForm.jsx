@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import './AddMachineForm.scss'
 import axios from '../../../utils/axios'
-const AddMachineForm = () => {
+const AddMachineForm = ({companies}) => {
     const [resultMsg, setResultMsg] = useState("");
-    const [companies, setCompanies] = useState([]);
     const [formData, setFormData] = useState({
       machine_id: null,
       address: "",
@@ -69,13 +68,22 @@ const AddMachineForm = () => {
         />
       </div>
       <div className="form__control">
-        <input
+        {/* <input
           type="text"
           name="company_id"
           placeholder="Компанія"
           value={formData.company_id}
           onChange={handleInputChange}
-        />
+        /> */}
+        <select onChange={handleInputChange}  name="company_id" value={formData.company_id}>
+            <option value="">Оберіть компанію</option>
+            {companies.length > 1 ?  
+            companies.map((item,idx)=>{
+             return <option key={idx} value={item.id}>{item.company_name}</option>   
+            }) :null
+            }
+    
+        </select>
       </div>
       <div className="form__control">
         <input
