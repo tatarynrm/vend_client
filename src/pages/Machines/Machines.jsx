@@ -7,6 +7,7 @@ import MachineItem from "./MachineItem";
 const Machines = () => {
   const userData = useSelector((state) => state.auth.data);
   const [machine, setMachine] = useState([]);
+  const [smsStatusInfo, setSmsStatusInfo] = useState(null);
 
   const getMyMachines = async () => {
     try {
@@ -26,13 +27,26 @@ const Machines = () => {
       getMyMachines();
     }
   }, [userData]);
+  useEffect(() => {}, [smsStatusInfo]);
+
   return (
     <div className="machine page">
       <div className="machine__inner container">
         <div className="machines__block">
+          {smsStatusInfo && (
+            <span style={{ color: "green", fontSize: "30px" }}>
+              {smsStatusInfo}
+            </span>
+          )}
           {machine ? (
             machine.map((item, idx) => {
-              return <MachineItem key={idx} item={item} />;
+              return (
+                <MachineItem
+                  setSmsStatusInfo={setSmsStatusInfo}
+                  key={idx}
+                  item={item}
+                />
+              );
             })
           ) : (
             <div>Немає апаратів до відображення</div>

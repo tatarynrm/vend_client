@@ -51,7 +51,7 @@ const AddUserForm = () => {
   useEffect(() => {
     const getAllCompanies = async () => {
       try {
-        const data = await axios.get("/company");
+        const data = await axios.get("/client");
         console.log(data);
         if (data.status === 200) {
             setCompanies(data.data)
