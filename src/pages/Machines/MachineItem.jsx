@@ -41,14 +41,14 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
-            liters,
+            liters: liters  ? liters : 0,
             userData,
           },
         });
         console.log(result.data[0]);
         if (result.data[0]) {
           setSmsStatusInfo(
-            `Видано літрів:${liters}.    ${moment(new Date()).format("LLL")}`
+            `Видано літрів:${liters}.${moment(new Date()).format("LLL")}`
           );
         }
       }
@@ -85,7 +85,8 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       setPriceForLitter(inputValue);
     }
   };
-  console.log(priceForLitter);
+  console.log(liters);
+
   return (
     <React.Fragment>
       <div className="water__machine">
@@ -114,11 +115,11 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             <input
               type="number"
               min={1}
-              max={30}
+              max={100}
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <button onClick={() => sendSms(1, item)} className="normal">
+            <button onClick={() => sendSms(1,item,liters)} className="normal">
               Видати воду
             </button>
           </div>
