@@ -36,19 +36,21 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   };
   const sendSms = async (smsStatus, smsInfo, liters) => {
     try {
-      const result = await axios.post("/msg", {
-        data: {
-          smsType: smsStatusUser(smsStatus),
-          smsInfo,
-          liters,
-          userData,
-        },
-      });
-      console.log(result.data[0]);
-      if (result.data[0]) {
-        setSmsStatusInfo(
-          `Видано літрів:${liters}.    ${moment(new Date()).format("LLL")}`
-        );
+      if (window.confirm(`Видати ${liters} літрів води?`)) {
+        const result = await axios.post("/msg", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            liters,
+            userData,
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Видано літрів:${liters}.    ${moment(new Date()).format("LLL")}`
+          );
+        }
       }
     } catch (error) {
       console.log(error);
