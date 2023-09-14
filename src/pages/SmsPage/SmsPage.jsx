@@ -3,6 +3,7 @@ import "./SmsPage.scss";
 import axios from "../../utils/axios";
 import moment from "moment";
 import "moment/locale/uk";
+import ExportExcel from "../../components/excel/ExportExcel";
 const SmsPage = () => {
   const [search, setSearch] = useState("");
   const [sms, setSms] = useState([]);
@@ -12,7 +13,7 @@ const SmsPage = () => {
   const [searchCompany, setSearchCompany] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [companyId, setCompanyId] = useState(null);
-  console.log(companyId);
+  const [companyName,setCompanyName] = useState(null)
   const getPrice = () => {
     const totalPrice1 = sms.filter((item) => item.company_id !== null);
 
@@ -60,7 +61,7 @@ const SmsPage = () => {
       const data = await axios.post("/sms/by-date-company", {
         dateFrom,
         dateTo,
-        company_id:companyId,
+        company_id: companyId,
       });
       if (data.status === 200) {
         setSms(data.data);
@@ -71,6 +72,16 @@ const SmsPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (companyId) {
+      
+      const companyToShow = companies.filter(item => item.id === companyId )
+      setCompanyName(companyToShow[0]?.company_name)
+    }
+    if (companyId === '0') {
+      return setCompanyName('')
+    }
+  }, [companyId]);
   useEffect(() => {}, [sms, search]);
   useEffect(() => {
     const getAllCompanies = async () => {
@@ -135,6 +146,14 @@ const SmsPage = () => {
             placeholder="Пошук"
             onChange={(e) => setSearch(e.target.value)}
           />
+          {sms.length > 0 && (
+            <div className="sms__excel">
+              <ExportExcel
+                apiData={sms}
+                fileName={`Звіт ${companyName} ${dateFrom} - ${dateTo}`}
+              />
+            </div>
+          )}
           {sms.length > 0
             ? sms
                 .filter((item) => item.company_id !== null)
