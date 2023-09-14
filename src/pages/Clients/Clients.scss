@@ -19,3 +19,20 @@
         width: 200px;
     }
 }
+
+@media screen  and (max-width: 768px) { 
+    .clients__inner {
+        display: flex;
+      .client {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        
+      }
+    }
+
+    .user__functions {
+        display: flex;
+        flex-direction: column;
+    }
+}
