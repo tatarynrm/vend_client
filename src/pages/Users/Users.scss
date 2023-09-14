@@ -21,7 +21,9 @@
 
 .user__functions{
     position: relative;
-    
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
     .created__at {
         position: absolute;
         bottom: 0;

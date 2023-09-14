@@ -36,12 +36,12 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   };
   const sendSms = async (smsStatus, smsInfo, liters) => {
     try {
-      if (window.confirm(`Видати ${liters} літрів води?`)) {
+      if (window.confirm(`Видати ${liters} літрів води?`) & +liters <= 70) {
         const result = await axios.post("/msg", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
-            liters: liters  ? liters : 0,
+            liters: liters ? liters : 0,
             userData,
           },
         });
@@ -51,6 +51,8 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             `Видано літрів:${liters}.${moment(new Date()).format("LLL")}`
           );
         }
+      }if (+liters > 70) {
+        window.alert('Завелика кількість літрів')
       }
     } catch (error) {
       console.log(error);
@@ -78,6 +80,28 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
+  const priceForLiter = async (smsStatus, smsInfo, priceForLiter) => {
+    try {
+      if (window.confirm(`Встановити нову ціну ?`)) {
+        const result = await axios.post("/msg/set-price", {
+          data: {
+            priceForLiter,
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Ціну за літр змінено.${moment(new Date()).format("LLL")}`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleInputChange = (event) => {
     // Ensure the input value is not negative
     const inputValue = event.target.value;
@@ -85,7 +109,7 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       setPriceForLitter(inputValue);
     }
   };
-  console.log(liters);
+  console.log(priceForLitter);
 
   return (
     <React.Fragment>
@@ -115,11 +139,11 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             <input
               type="number"
               min={1}
-              max={100}
+              max={70}
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <button onClick={() => sendSms(1,item,liters)} className="normal">
+            <button onClick={() => sendSms(1, item, liters)} className="normal">
               Видати воду
             </button>
           </div>
@@ -137,10 +161,15 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             <input
               type="number"
               value={priceForLitter}
-              onChange={handleInputChange}
+              onChange={(e) => setPriceForLitter(e.target.value)}
             />
             <span>Ціна : 150 = 1.5 грн</span>
-            <button className="normal">Встановити ціну за літр</button>
+            <button
+              onClick={(e) => priceForLiter(4, item, priceForLitter)}
+              className="normal"
+            >
+              Встановити ціну за літр
+            </button>
           </div>
         </div>
       )}

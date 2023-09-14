@@ -32,7 +32,7 @@ const Header = () => {
               </div>
             ) : (
               <div className="header__menu header__menu-user">
-                <Link to={'/my-machines'} className="normal">Мої апарати</Link>
+                <NavLink to={'/my-machines'} className="normal">Мої апарати</NavLink>
               </div>
             )}
           </div>
