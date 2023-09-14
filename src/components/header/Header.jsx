@@ -53,6 +53,7 @@ const Header = () => {
             <button onClick={logoutFromAccount} className="normal">
               Вийти з аккаунту.
             </button>
+         
           </div>
         )}
       </div>

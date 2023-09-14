@@ -50,19 +50,20 @@
 
 @media screen  and (max-width: 768px) {
    .header__menu-admin {
-    font-size: 6px;
+    font-size: 8px;
    }
    .logo {
-    font-size: 7px;
+    // font-size: 7px;
     a {
-        padding: 1px;
+        padding: 5px;
     }
    }
     .header{
      
 
         &__inner {
-
+display: flex;
+flex-wrap: wrap;
         }
     }
     .navigation {
@@ -97,6 +98,7 @@
             font-size: 6px;
         }
     }
+ 
 }
 
 
