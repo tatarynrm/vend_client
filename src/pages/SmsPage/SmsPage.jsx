@@ -9,7 +9,10 @@ const SmsPage = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [totalPrice, setTotalPrice] = useState(null);
-  const [searchCompany,setSearchCompany] = useState([])
+  const [searchCompany, setSearchCompany] = useState([]);
+  const [companies, setCompanies] = useState([]);
+  const [companyId, setCompanyId] = useState(null);
+  console.log(companyId);
   const getPrice = () => {
     const totalPrice1 = sms.filter((item) => item.company_id !== null);
 
@@ -52,8 +55,38 @@ const SmsPage = () => {
       console.log(error);
     }
   };
+  const selectSmsByDateAndCompany = async () => {
+    try {
+      const data = await axios.post("/sms/by-date-company", {
+        dateFrom,
+        dateTo,
+        company_id:companyId,
+      });
+      if (data.status === 200) {
+        setSms(data.data);
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {}, [sms, search]);
+  useEffect(() => {
+    const getAllCompanies = async () => {
+      try {
+        const data = await axios.get("/client");
+        console.log(data);
+        if (data.status === 200) {
+          setCompanies(data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllCompanies();
+  }, []);
+
   return (
     <div className="sms page">
       <div className="sms__inner container">
@@ -68,7 +101,28 @@ const SmsPage = () => {
             name="to"
             onChange={(e) => setDateTo(e.target.value)}
           />
-          <button onClick={selectSmsByDate} className="normal">
+          <select
+            onChange={(e) => setCompanyId(e.target.value)}
+            name="company_id"
+            value={companyId}
+          >
+            <option value="0">Оберіть компанію</option>
+            {companies.length > 1
+              ? companies.map((item, idx) => {
+                  return (
+                    <option key={idx} value={item.id}>
+                      {item.company_name}
+                    </option>
+                  );
+                })
+              : null}
+          </select>
+          <button
+            onClick={
+              companyId !== null ? selectSmsByDateAndCompany : selectSmsByDate
+            }
+            className="normal"
+          >
             Дивитись період
           </button>
         </div>

@@ -63,7 +63,7 @@ const AddUserForm = () => {
     getAllCompanies();
   }, []);
 
-  console.log(formData);
+  // console.log(formData);
   return (
     <form className="add__user-form" onSubmit={handleSubmitUser}>
       <div className="form__control">
