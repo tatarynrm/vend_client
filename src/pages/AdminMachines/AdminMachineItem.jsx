@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 const AdminMachineItem = ({ item, idx }) => {
   const [collapse, setCollapse] = useState(false);
+  const [adminFunctions,setAdminFunctions] = useState(false)
   const [formData, setFormData] = useState({});
   useEffect(() => {
     if (item) {
@@ -62,6 +63,14 @@ const AdminMachineItem = ({ item, idx }) => {
           >
             {collapse ? "Приховати" : "Дивитись/Змінити"}
           </button>
+          <button
+            onClick={() => {
+              setAdminFunctions((val) => !val);
+            }}
+            className="normal"
+          >
+            {adminFunctions ? "Приховати" : "Сервісні функції"}
+          </button>
         </div>
       </div>
       {collapse ? (
@@ -113,6 +122,24 @@ const AdminMachineItem = ({ item, idx }) => {
           </button>
         </div>
       ) : null}
+      {adminFunctions ? <div className="admin__functions">
+       <div className="form__control">
+        <input type="text" />
+        <button className="normal">Змінити пін</button>
+       </div>
+       <div className="form__control">
+        <input type="text" />
+        <button className="normal">Перезавантажити модуль</button>
+       </div>
+       <div className="form__control">
+        <div></div>
+        <button className="normal">Collect Cash</button>
+       </div>
+       <div className="form__control">
+        <input type="text" placeholder="38098...." />
+        <button className="normal">Номер модуля</button>
+       </div>
+      </div> :null}
     </React.Fragment>
   );
 };

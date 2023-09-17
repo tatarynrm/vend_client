@@ -42,12 +42,21 @@
         align-items: center;
     }
 }
-
+.admin__functions{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
 @media screen  and (max-width: 768px) {  
 
     .admin__machine-item {
         display: flex;
         flex-direction: column;
         height: auto;
+    }
+    .admin__functions{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 }
