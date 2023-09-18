@@ -38,7 +38,6 @@ const UserItem = ({ item }) => {
   const editUser = async () => {
     try {
       const data = await axios.post("/user/update", formData);
-      console.log(data);
       if (data.status === 200) {
         window.location.reload()
       }
@@ -48,12 +47,15 @@ const UserItem = ({ item }) => {
   };
   const deleteUser = async (item)=>{
     try {
-      const data = await axios.post('/user/delete',{id:+item.id});
-      console.log(data);
-      if (data.status === 200) {
-        window.alert('Успішно видалено користувача')
-        window.location.reload()
+      if (window.confirm('Ви дійсно хочете видалити користувача?')) {
+        const data = await axios.post('/user/delete',{id:+item.id});
+     
+        if (data.status === 200) {
+          window.alert('Успішно видалено користувача')
+          window.location.reload()
+        }
       }
+
     } catch (error) {
       console.log(error);
     }

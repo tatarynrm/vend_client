@@ -10,6 +10,7 @@ const AdminMachines = () => {
   const [companies,setCompanies] = useState([])
   const [addNewMachine, setAddNewMachine] = useState(false);
   const [search, setSearch] = useState("");
+  const [smsStatusInfo, setSmsStatusInfo] = useState(null);
   const getAllMachines = async () => {
     try {
       const data = await axios.get("/machine/all");
@@ -42,6 +43,11 @@ const AdminMachines = () => {
   return (
     <div className="admin-machines page">
       <div className="admin__machines__inner container">
+      {smsStatusInfo && (
+            <span style={{ color: "green", fontSize: "30px" }}>
+              {smsStatusInfo}
+            </span>
+          )}
         {addNewMachine ? (
           <AiFillCloseCircle
             onClick={() => setAddNewMachine((val) => !val)}
@@ -91,7 +97,7 @@ const AdminMachines = () => {
                   item.address.toUpperCase().includes(search) 
             )
               .map((item, idx) => {
-                return <AdminMachineItem  key={idx} idx={idx} item={item} />;
+                return <AdminMachineItem  setSmsStatusInfo={setSmsStatusInfo} key={idx} idx={idx} item={item} />;
               })
           : null}
       </div>

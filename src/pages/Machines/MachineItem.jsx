@@ -8,7 +8,7 @@ import "moment/locale/uk";
 import { useSelector } from "react-redux";
 const MachineItem = ({ item, setSmsStatusInfo }) => {
   const userData = useSelector((state) => state.auth.data);
-  console.log(userData);
+
   const [liters, setLiters] = useState(1);
   const [collapse, setCollapse] = useState(false);
   const [smsStatus, setSmsStatus] = useState(null);
