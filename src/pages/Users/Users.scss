@@ -80,3 +80,23 @@
         gap: 5px;
     }
 }
+@media screen  and (max-width: 1200px) {
+   
+    .user__functions{
+        position: relative;
+        display: flex;
+    flex-direction: column;
+        gap: 20px;
+        button {
+            width: 30%;
+            margin: 0 auto;
+        }
+        .created__at {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-size: 12px;
+           
+        }
+    }
+}
