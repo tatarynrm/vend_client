@@ -48,6 +48,7 @@ const Header = () => {
         ) : null}
         {userOptions && (
           <div className="user__options">
+            <div onClick={()=>setUserOptions(false)}  className="close__user-options">Закрити меню X</div>
             <p>{userData?.email}</p> <br />
             <p>{userData?.tel}</p>
             <button onClick={logoutFromAccount} className="normal">

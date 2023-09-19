@@ -33,7 +33,13 @@
         border-radius: 10px;
     }
 }
-
+.close__user-options{
+    position: absolute;
+    bottom: 5px;
+    color: red;
+    font-weight: bold;
+    right: 5px;
+}
 .header__menu{
  
     button {
