@@ -49,6 +49,9 @@
 
 
 @media screen  and (max-width: 768px) {
+    header {
+        height: 200px;
+    }
    .header__menu-admin {
     font-size: 8px;
    }
@@ -62,8 +65,9 @@
      
 
         &__inner {
+            height: 200px;
 display: flex;
-flex-wrap: wrap;
+flex-direction: column;
         }
     }
     .navigation {
