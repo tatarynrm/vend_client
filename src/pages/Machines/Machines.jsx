@@ -16,8 +16,9 @@ const Machines = () => {
       });
       console.log(data);
       if (data.status === 200) {
+        setMachine(data.data);
       }
-      setMachine(data.data);
+    
     } catch (error) {
       console.log(error);
     }

@@ -10,6 +10,16 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   const [adminFunctions, setAdminFunctions] = useState(false);
   const [formData, setFormData] = useState({});
   const [priceForLitter, setPriceForLitter] = useState("");
+  const [liters, setLiters] = useState(1);
+  const [newPin,setNewPin] = useState(null)
+
+  const handlePriceForLiter = (event) => {
+    // Ensure the input value is not negative
+    const inputValue = event.target.value;
+    if (inputValue === "" || parseFloat(inputValue) >= 0) {
+      setPriceForLitter(inputValue);
+    }
+  };
 
   useEffect(() => {
     if (item) {
@@ -107,6 +117,75 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             `Ціну за літр змінено.${moment(new Date()).format("LLL")}`
           );
         }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getInfo = async (smsStatus, smsInfo) => {
+    try {
+      if (window.confirm(`Встановити нову ціну ?`)) {
+        const result = await axios.post("/msg/get-info", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Опцію Get Info виконано.${moment(new Date()).format("LLL")}`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addLiters = async (smsStatus, smsInfo, liters) => {
+    try {
+      if (window.confirm(`Видати ${liters} літрів води?`) & +liters <= 70) {
+        const result = await axios.post("/msg", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            liters: liters ? liters : 0,
+            userData,
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Видано літрів:${liters}.${moment(new Date()).format("LLL")}`
+          );
+        }
+      }if (+liters > 70) {
+        window.alert('Завелика кількість літрів')
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const changePin = async (smsStatus, smsInfo, pin) => {
+    try {
+      if (window.confirm(`Змінити пін код на ${newPin}`) & +liters <= 70) {
+        const result = await axios.post("/msg/change-pin", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            pin:pin,
+            userData,
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Змінено пін:${newPin}.${moment(new Date()).format("LLL")}`
+          );
+        }
+      }if (newPin === null ) {
+        window.alert('Невірний пін')
       }
     } catch (error) {
       console.log(error);
@@ -219,8 +298,14 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             </button>
           </div>
           <div className="form__control">
-            <input type="text" />
-            <button className="normal">Змінити пін</button>
+            <div></div>
+            <button onClick={() => getInfo(6, item)} className="normal">
+              Get Info
+            </button>
+          </div>
+          <div className="form__control">
+            <input type="text" onChange={(e)=>setNewPin(e.target.value)}/>
+            <button onClick={()=>changePin(5,item,newPin)} className="normal">Змінити пін</button>
           </div>
 
           <div className="form__control">
@@ -241,6 +326,18 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
               className="normal"
             >
               Встановити ціну за літр
+            </button>
+          </div>
+          <div className="form__control">
+            <input
+              type="number"
+              min={1}
+              max={70}
+              value={liters}
+              onChange={(e) => setLiters(e.target.value)}
+            />
+            <button onClick={() => addLiters(1, item, liters)} className="normal">
+              Видати воду
             </button>
           </div>
         </div>

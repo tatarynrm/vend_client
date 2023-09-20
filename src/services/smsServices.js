@@ -13,8 +13,10 @@ export const smsStatusUser = (status) => {
     case 4:
       return "Встановити ціну";
 
-      case 5:
-        return "Змінити пін"
+    case 5:
+      return "Змінити пін";
+    case 6:
+      return "Get Info";
     default:
       break;
   }

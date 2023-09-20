@@ -109,7 +109,7 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       setPriceForLitter(inputValue);
     }
   };
-  console.log(priceForLitter);
+
 
   return (
     <React.Fragment>
