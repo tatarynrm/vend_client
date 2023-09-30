@@ -15,6 +15,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   const [newNumber,setNewNumber] = useState('')
   const [newToken,setNewToken] = useState('')
   const [newAnthillAddress,setNewAnthillAddress] = useState('')
+  const [serviceNumber,setServiceNumber] = useState('')
 
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
@@ -239,7 +240,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
-  const changeAddress = async (smsStatus, smsInfo,newNumber) => {
+  const changeAddress = async (smsStatus, smsInfo,newAnthillAddress) => {
     try {
       if (window.confirm(`Встановити токен?`) ){
         const result = await axios.post("/msg/change-address", {
@@ -248,6 +249,28 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             smsInfo,
             userData,
             newAnthillAddress: newAnthillAddress !== '' ? newAnthillAddress : smsInfo.machine_address
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Номер телефону успішно змінено`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const changeServiceNumber = async (smsStatus, smsInfo,serviceNumber) => {
+    try {
+      if (window.confirm(`Встановити токен?`) ){
+        const result = await axios.post("/msg/change-service-number", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+            serviceNumber: serviceNumber !== '' ? serviceNumber : smsInfo.terminal_sim
           },
         });
         console.log(result.data[0]);
@@ -390,6 +413,10 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
           <div className="form__control">
             <input type="text" placeholder="ANTHILL ADDRES" defaultValue={item.machine_address}  onChange={e=>setNewAnthillAddress(+e.target.value)} />
             <button onClick={()=>changeAddress(9,item,newAnthillAddress)} className="normal">Змінити ADR</button>
+          </div>
+          <div className="form__control">
+            <input type="text" placeholder="Service Number" defaultValue={item.terminal_sim}  onChange={e=>setServiceNumber(e.target.value)} />
+            <button onClick={()=>changeServiceNumber(10,item,serviceNumber)} className="normal">Змінити сервісний номер</button>
           </div>
           <div className="form__control">
             <input

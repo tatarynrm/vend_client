@@ -23,6 +23,8 @@ export const smsStatusUser = (status) => {
       return "Встановити токен";
     case 9:
       return "Set anthillAdreess";
+    case 10:
+      return "Change Service Number";
     default:
       break;
   }
