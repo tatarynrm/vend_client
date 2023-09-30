@@ -87,8 +87,8 @@ const AdminMachines = () => {
               .filter((item) =>
               search.toLocaleLowerCase() === ""
                 ? item
-                : item.machine_id.toLowerCase().includes(search) ||
-                  item.machine_id.toUpperCase().includes(search) ||
+                : item.machine_id.toString().toLowerCase().includes(search) ||
+                  item.machine_id.toString().toUpperCase().includes(search) ||
                   item.company_name.toLowerCase().includes(search) ||
                   item.company_name.toUpperCase().includes(search) ||
                   item.machine_phone.toLowerCase().includes(search) ||

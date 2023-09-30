@@ -17,6 +17,10 @@ export const smsStatusUser = (status) => {
       return "Змінити пін";
     case 6:
       return "Get Info";
+    case 7:
+      return "Заміна номера модуля";
+    case 7:
+      return "Встановити токен";
     default:
       break;
   }

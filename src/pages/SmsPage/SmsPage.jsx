@@ -97,7 +97,7 @@ const SmsPage = () => {
     };
     getAllCompanies();
   }, []);
-
+  const toTimestamp = (strDate) => Date.parse(strDate);
   return (
     <div className="sms page">
       <div className="sms__inner container">
@@ -162,6 +162,7 @@ const SmsPage = () => {
                     ? item
                     : item.company_name.toLowerCase().includes(search);
                 })
+                .sort((a,b)=> toTimestamp(b.created_at) - toTimestamp(a.created_at))
                 .map((item, idx) => {
                   return (
                     <div className="sms__item" key={idx}>

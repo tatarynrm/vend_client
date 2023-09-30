@@ -11,7 +11,8 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   const [formData, setFormData] = useState({});
   const [priceForLitter, setPriceForLitter] = useState("");
   const [liters, setLiters] = useState(1);
-  const [newPin,setNewPin] = useState(null)
+  const [newPin,setNewPin]= useState()
+  const [newNumber,setNewNumber] = useState('')
 
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
@@ -36,7 +37,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value.trim(),
     }));
   };
   const editMachine = async () => {
@@ -191,6 +192,29 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
+  const changeNumber = async (smsStatus, smsInfo,newNumber) => {
+    try {
+      if (window.confirm(`Змінити номер?`) ){
+        const result = await axios.post("/msg/change-number", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+            newNumber: newNumber !== '' ? newNumber : smsInfo.machine_phone
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Номер телефону успішно змінено`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(newNumber);
   return (
     <React.Fragment>
       <div className="admin__machine-item">
@@ -304,13 +328,21 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             </button>
           </div>
           <div className="form__control">
-            <input type="text" onChange={(e)=>setNewPin(e.target.value)}/>
+            <input type="text" defaultValue={item.machine_pin} onChange={(e)=>setNewPin(e.target.value)}/>
             <button onClick={()=>changePin(5,item,newPin)} className="normal">Змінити пін</button>
           </div>
 
           <div className="form__control">
-            <input type="text" placeholder="38098...." />
-            <button className="normal">Номер модуля</button>
+            <input type="text" placeholder="38098...." defaultValue={item.machine_phone} onChange={e=> setNewNumber(e.target.value)} />
+            <button onClick={()=>changeNumber(7,item,newNumber)} className="normal">Змінити номер модуля</button>
+          </div>
+          <div className="form__control">
+            <input type="text" placeholder="ТОКЕН"   />
+            <button className="normal">Змінити токен</button>
+          </div>
+          <div className="form__control">
+            <input type="text" placeholder="ANTHILL ADDRES"  />
+            <button className="normal">Змінити ADR</button>
           </div>
           <div className="form__control">
             <input
