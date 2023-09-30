@@ -13,6 +13,8 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   const [liters, setLiters] = useState(1);
   const [newPin,setNewPin]= useState()
   const [newNumber,setNewNumber] = useState('')
+  const [newToken,setNewToken] = useState('')
+  const [newAnthillAddress,setNewAnthillAddress] = useState('')
 
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
@@ -214,7 +216,52 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
-  console.log(newNumber);
+  
+  const changeToken = async (smsStatus, smsInfo,newToken) => {
+    try {
+      if (window.confirm(`Встановити токен?`) ){
+        const result = await axios.post("/msg/change-token", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+            newToken: newToken !== '' ? newToken : smsInfo.machine_token
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Токен успішно змінено`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const changeAddress = async (smsStatus, smsInfo,newNumber) => {
+    try {
+      if (window.confirm(`Встановити токен?`) ){
+        const result = await axios.post("/msg/change-address", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+            newAnthillAddress: newAnthillAddress !== '' ? newAnthillAddress : smsInfo.machine_address
+          },
+        });
+        console.log(result.data[0]);
+        if (result.data[0]) {
+          setSmsStatusInfo(
+            `Номер телефону успішно змінено`
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   return (
     <React.Fragment>
       <div className="admin__machine-item">
@@ -337,12 +384,12 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             <button onClick={()=>changeNumber(7,item,newNumber)} className="normal">Змінити номер модуля</button>
           </div>
           <div className="form__control">
-            <input type="text" placeholder="ТОКЕН"   />
-            <button className="normal">Змінити токен</button>
+            <input type="text" placeholder="ТОКЕН"  defaultValue={item.machine_token}  onChange={e=> setNewToken(e.target.value)} />
+            <button onClick={()=>changeToken(8,item,newToken)} className="normal">Змінити токен</button>
           </div>
           <div className="form__control">
-            <input type="text" placeholder="ANTHILL ADDRES"  />
-            <button className="normal">Змінити ADR</button>
+            <input type="text" placeholder="ANTHILL ADDRES" defaultValue={item.machine_address}  onChange={e=>setNewAnthillAddress(+e.target.value)} />
+            <button onClick={()=>changeAddress(9,item,newAnthillAddress)} className="normal">Змінити ADR</button>
           </div>
           <div className="form__control">
             <input
