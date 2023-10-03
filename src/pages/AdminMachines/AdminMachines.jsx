@@ -22,24 +22,27 @@ const AdminMachines = () => {
       console.log(error);
     }
   };
-  console.log(allMachines);
+  const getAllCompanies = async () => {
+    try {
+      const data = await axios.get("/client");
+      console.log(data);
+      if (data.status === 200) {
+          setCompanies(data.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getAllMachines();
   }, []);
+
   useEffect(() => {
-    const getAllCompanies = async () => {
-      try {
-        const data = await axios.get("/client");
-        console.log(data);
-        if (data.status === 200) {
-            setCompanies(data.data)
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+
     getAllCompanies();
   }, []);
+console.log(companies);
   return (
     <div className="admin-machines page">
       <div className="admin__machines__inner container">
@@ -97,7 +100,7 @@ const AdminMachines = () => {
                   item.address.toUpperCase().includes(search) 
             )
               .map((item, idx) => {
-                return <AdminMachineItem  setSmsStatusInfo={setSmsStatusInfo} key={idx} idx={idx} item={item} />;
+                return <AdminMachineItem companies={companies}  setSmsStatusInfo={setSmsStatusInfo} key={idx} idx={idx} item={item} />;
               })
           : null}
       </div>

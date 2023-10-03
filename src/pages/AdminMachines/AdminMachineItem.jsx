@@ -4,19 +4,20 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/uk";
 import { smsStatusUser } from "../../services/smsServices";
-const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
+const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
   const userData = useSelector((state) => state.auth.data);
   const [collapse, setCollapse] = useState(false);
   const [adminFunctions, setAdminFunctions] = useState(false);
   const [formData, setFormData] = useState({});
   const [priceForLitter, setPriceForLitter] = useState("");
   const [liters, setLiters] = useState(1);
-  const [newPin,setNewPin]= useState()
-  const [newNumber,setNewNumber] = useState('')
-  const [newToken,setNewToken] = useState('')
-  const [newAnthillAddress,setNewAnthillAddress] = useState('')
-  const [serviceNumber,setServiceNumber] = useState('')
-
+  const [newPin, setNewPin] = useState();
+  const [newNumber, setNewNumber] = useState("");
+  const [newToken, setNewToken] = useState("");
+  const [newAnthillAddress, setNewAnthillAddress] = useState("");
+  const [serviceNumber, setServiceNumber] = useState("");
+  const [cahngeCompany,setChangeCompany] = useState([])
+  console.log(item);
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
     const inputValue = event.target.value;
@@ -24,7 +25,14 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
       setPriceForLitter(inputValue);
     }
   };
-
+  const setNewCompany = (event)=>{
+    setChangeCompany([
+     { company_name:event.target.options[event.target.selectedIndex].text,
+      company_id:+event.target.value}
+    ])
+  }
+  console.log(cahngeCompany);
+const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
   useEffect(() => {
     if (item) {
       setFormData({
@@ -33,9 +41,13 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
         machine_phone: item.machine_phone,
         terminal_sim: item.terminal_sim,
         machine_pin: item.machine_pin,
+        company_id: cahngeCompany[0]?.company_id 
       });
     }
-  }, []);
+  }, [cahngeCompany]);
+  useEffect(()=>{
+
+  },[])
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -149,7 +161,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   };
   const addLiters = async (smsStatus, smsInfo, liters) => {
     try {
-      if (window.confirm(`Видати ${liters} літрів води?`) & +liters <= 70) {
+      if (window.confirm(`Видати ${liters} літрів води?`) & (+liters <= 70)) {
         const result = await axios.post("/msg", {
           data: {
             smsType: smsStatusUser(smsStatus),
@@ -164,8 +176,9 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             `Видано літрів:${liters}.${moment(new Date()).format("LLL")}`
           );
         }
-      }if (+liters > 70) {
-        window.alert('Завелика кількість літрів')
+      }
+      if (+liters > 70) {
+        window.alert("Завелика кількість літрів");
       }
     } catch (error) {
       console.log(error);
@@ -173,12 +186,12 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
   };
   const changePin = async (smsStatus, smsInfo, pin) => {
     try {
-      if (window.confirm(`Змінити пін код на ${newPin}`) & +liters <= 70) {
+      if (window.confirm(`Змінити пін код на ${newPin}`) & (+liters <= 70)) {
         const result = await axios.post("/msg/change-pin", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
-            pin:pin,
+            pin: pin,
             userData,
           },
         });
@@ -188,103 +201,100 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             `Змінено пін:${newPin}.${moment(new Date()).format("LLL")}`
           );
         }
-      }if (newPin === null ) {
-        window.alert('Невірний пін')
+      }
+      if (newPin === null) {
+        window.alert("Невірний пін");
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const changeNumber = async (smsStatus, smsInfo,newNumber) => {
+  const changeNumber = async (smsStatus, smsInfo, newNumber) => {
     try {
-      if (window.confirm(`Змінити номер?`) ){
+      if (window.confirm(`Змінити номер?`)) {
         const result = await axios.post("/msg/change-number", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
             userData,
-            newNumber: newNumber !== '' ? newNumber : smsInfo.machine_phone
+            newNumber: newNumber !== "" ? newNumber : smsInfo.machine_phone,
           },
         });
         console.log(result.data[0]);
         if (result.data[0]) {
-          setSmsStatusInfo(
-            `Номер телефону успішно змінено`
-          );
+          setSmsStatusInfo(`Номер телефону успішно змінено`);
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
-  const changeToken = async (smsStatus, smsInfo,newToken) => {
+
+  const changeToken = async (smsStatus, smsInfo, newToken) => {
     try {
-      if (window.confirm(`Встановити токен?`) ){
+      if (window.confirm(`Встановити токен?`)) {
         const result = await axios.post("/msg/change-token", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
             userData,
-            newToken: newToken !== '' ? newToken : smsInfo.machine_token
+            newToken: newToken !== "" ? newToken : smsInfo.machine_token,
           },
         });
         console.log(result.data[0]);
         if (result.data[0]) {
-          setSmsStatusInfo(
-            `Токен успішно змінено`
-          );
+          setSmsStatusInfo(`Токен успішно змінено`);
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const changeAddress = async (smsStatus, smsInfo,newAnthillAddress) => {
+  const changeAddress = async (smsStatus, smsInfo, newAnthillAddress) => {
     try {
-      if (window.confirm(`Встановити токен?`) ){
+      if (window.confirm(`Встановити токен?`)) {
         const result = await axios.post("/msg/change-address", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
             userData,
-            newAnthillAddress: newAnthillAddress !== '' ? newAnthillAddress : smsInfo.machine_address
+            newAnthillAddress:
+              newAnthillAddress !== ""
+                ? newAnthillAddress
+                : smsInfo.machine_address,
           },
         });
         console.log(result.data[0]);
         if (result.data[0]) {
-          setSmsStatusInfo(
-            `Номер телефону успішно змінено`
-          );
+          setSmsStatusInfo(`Номер телефону успішно змінено`);
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const changeServiceNumber = async (smsStatus, smsInfo,serviceNumber) => {
+  const changeServiceNumber = async (smsStatus, smsInfo, serviceNumber) => {
     try {
-      if (window.confirm(`Встановити токен?`) ){
+      if (window.confirm(`Встановити токен?`)) {
         const result = await axios.post("/msg/change-service-number", {
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
             userData,
-            serviceNumber: serviceNumber !== '' ? serviceNumber : smsInfo.terminal_sim
+            serviceNumber:
+              serviceNumber !== "" ? serviceNumber : smsInfo.terminal_sim,
           },
         });
         console.log(result.data[0]);
         if (result.data[0]) {
-          setSmsStatusInfo(
-            `Номер телефону успішно змінено`
-          );
+          setSmsStatusInfo(`Номер телефону успішно змінено`);
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <React.Fragment>
       <div className="admin__machine-item">
@@ -365,6 +375,33 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
               onChange={handleInputChange}
             />
           </div>
+          <div className="form__control">
+      <span style={{backgroundColor:'green',padding:"0.4rem"}}>
+        {cahngeCompany.length > 0 ? cahngeCompany[0]?.company_name : companies?.map((val,idx)=>{
+        if (val.id === item.id) {
+          return val.company_name
+        }
+      }) }
+        {/* {companies?.map((val,idx)=>{
+        if (val.id === item.id) {
+          return val.company_name
+        }
+      })} */}
+      
+      </span>
+            <select onChange={(event)=>setNewCompany(event) }>
+              {companies
+                ?.sort((a, b) => b.company_name - a.company_name)
+                .map((val, idx) => {
+                  return (
+                    <option key={idx} value={val.id}>
+                      {val.company_name}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
+
           <button onClick={editMachine} className="normal">
             Редагувати
           </button>
@@ -398,25 +435,74 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
             </button>
           </div>
           <div className="form__control">
-            <input type="text" defaultValue={item.machine_pin} onChange={(e)=>setNewPin(e.target.value)}/>
-            <button onClick={()=>changePin(5,item,newPin)} className="normal">Змінити пін</button>
+            <input
+              type="text"
+              defaultValue={item.machine_pin}
+              onChange={(e) => setNewPin(e.target.value)}
+            />
+            <button
+              onClick={() => changePin(5, item, newPin)}
+              className="normal"
+            >
+              Змінити пін
+            </button>
           </div>
 
           <div className="form__control">
-            <input type="text" placeholder="38098...." defaultValue={item.machine_phone} onChange={e=> setNewNumber(e.target.value)} />
-            <button onClick={()=>changeNumber(7,item,newNumber)} className="normal">Змінити номер модуля</button>
+            <input
+              type="text"
+              placeholder="38098...."
+              defaultValue={item.machine_phone}
+              onChange={(e) => setNewNumber(e.target.value)}
+            />
+            <button
+              onClick={() => changeNumber(7, item, newNumber)}
+              className="normal"
+            >
+              Змінити номер модуля
+            </button>
           </div>
           <div className="form__control">
-            <input type="text" placeholder="ТОКЕН"  defaultValue={item.machine_token}  onChange={e=> setNewToken(e.target.value)} />
-            <button onClick={()=>changeToken(8,item,newToken)} className="normal">Змінити токен</button>
+            <input
+              type="text"
+              placeholder="ТОКЕН"
+              defaultValue={item.machine_token}
+              onChange={(e) => setNewToken(e.target.value)}
+            />
+            <button
+              onClick={() => changeToken(8, item, newToken)}
+              className="normal"
+            >
+              Змінити токен
+            </button>
           </div>
           <div className="form__control">
-            <input type="text" placeholder="ANTHILL ADDRES" defaultValue={item.machine_address}  onChange={e=>setNewAnthillAddress(+e.target.value)} />
-            <button onClick={()=>changeAddress(9,item,newAnthillAddress)} className="normal">Змінити ADR</button>
+            <input
+              type="text"
+              placeholder="ANTHILL ADDRES"
+              defaultValue={item.machine_address}
+              onChange={(e) => setNewAnthillAddress(+e.target.value)}
+            />
+            <button
+              onClick={() => changeAddress(9, item, newAnthillAddress)}
+              className="normal"
+            >
+              Змінити ADR
+            </button>
           </div>
           <div className="form__control">
-            <input type="text" placeholder="Service Number" defaultValue={item.terminal_sim}  onChange={e=>setServiceNumber(e.target.value)} />
-            <button onClick={()=>changeServiceNumber(10,item,serviceNumber)} className="normal">Змінити сервісний номер</button>
+            <input
+              type="text"
+              placeholder="Service Number"
+              defaultValue={item.terminal_sim}
+              onChange={(e) => setServiceNumber(e.target.value)}
+            />
+            <button
+              onClick={() => changeServiceNumber(10, item, serviceNumber)}
+              className="normal"
+            >
+              Змінити сервісний номер
+            </button>
           </div>
           <div className="form__control">
             <input
@@ -442,7 +528,10 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo }) => {
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <button onClick={() => addLiters(1, item, liters)} className="normal">
+            <button
+              onClick={() => addLiters(1, item, liters)}
+              className="normal"
+            >
               Видати воду
             </button>
           </div>
