@@ -25,3 +25,21 @@
     
     }
 }
+
+@media screen  and (max-width: 768px) {
+    .card__items {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 50%;
+        margin: 0 auto;
+        font-size: 24px;
+        font-weight: bold;
+        .card__item{
+            width: 200px;
+            height: 100px;
+            display: flex;
+        }
+    }
+
+}

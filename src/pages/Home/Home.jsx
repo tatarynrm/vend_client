@@ -51,7 +51,7 @@ const Home = () => {
 
     getAllCompanies();
   }, []);
-console.log(users);
+console.log(allMachines);
   return (
     <div className="home page">
       <div className="home__inner container"></div>
@@ -69,7 +69,7 @@ console.log(users);
     </div>
     <div className="card__item">
     <span>Апаратів</span>
-    <span>{allMachines?.filter(item => item.id !== null).length}</span>
+    <span>{allMachines?.filter(item => item.machine_id !== null).length}</span>
     </div>
   </div>
 </div>
