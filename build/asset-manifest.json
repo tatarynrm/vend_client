@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.a1bd99fe.css",
-    "main.js": "/static/js/main.229ae083.js",
+    "main.css": "/static/css/main.6e232985.css",
+    "main.js": "/static/js/main.eea89074.js",
     "static/media/water_machine.png": "/static/media/water_machine.7c5cd2ea95a4aae9bed4.png",
     "static/media/Sun.svg": "/static/media/Sun.681607dcda2a01539a9a8a157ae74e6e.svg",
     "static/media/Moon.svg": "/static/media/Moon.0a6a2b75ac51157455302ddcfca385c0.svg",
     "index.html": "/index.html",
-    "main.a1bd99fe.css.map": "/static/css/main.a1bd99fe.css.map",
-    "main.229ae083.js.map": "/static/js/main.229ae083.js.map"
+    "main.6e232985.css.map": "/static/css/main.6e232985.css.map",
+    "main.eea89074.js.map": "/static/js/main.eea89074.js.map"
   },
   "entrypoints": [
-    "static/css/main.a1bd99fe.css",
-    "static/js/main.229ae083.js"
+    "static/css/main.6e232985.css",
+    "static/js/main.eea89074.js"
   ]
 }
