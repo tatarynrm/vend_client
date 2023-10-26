@@ -11,10 +11,15 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MoonIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 const LoginForm = () => {
+  const [show, setShow] = React.useState(false)
+  const handleClick = () => setShow(!show)
   const { colorMode, toggleColorMode } = useColorMode();
   const token = window.localStorage.getItem("token");
   const navigate = useNavigate();
@@ -47,7 +52,7 @@ const LoginForm = () => {
   //     return navigate("/");
   //   }
   return (
-    <form display onSubmit={signIn} className="login__form">
+    <form onSubmit={signIn} className="login__form">
       <FormControl>
         <FormLabel>Email address</FormLabel>
         <Input
@@ -59,14 +64,22 @@ const LoginForm = () => {
         {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
       </FormControl>
 
-      <FormControl>
-        <FormLabel>Email address</FormLabel>
+      <FormControl marginTop={'10px'}>
+        <FormLabel>Password</FormLabel>
+        <InputGroup>
+      
         <Input
-          type="pasword"
+          type={show ? "text" : "password"}
           placeholder="Password"
           name="password"
           onChange={handleInputChange}
         />
+              <InputRightElement width='4.5rem'>
+        <Button h='1.75rem' size='sm' onClick={handleClick}>
+          {show ? 'Hide' : 'Show'}
+        </Button>
+      </InputRightElement>
+      </InputGroup>
         {/* <FormHelperText>Password input</FormHelperText> */}
       </FormControl>
 
