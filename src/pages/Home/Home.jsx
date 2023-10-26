@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import axios from "../../utils/axios";
 import { Card, CardBody, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const userData = useSelector((state) => state.auth.data);
+  console.log(userData);
   const [users, setUsers] = useState([]);
   const [allMachines, setAllMachines] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -56,7 +59,7 @@ const Home = () => {
     <div className="home page">
       <div className="home__inner container"></div>
 
-      <div className="cards">
+{userData?.role === 1 &&       <div className="cards">
         <div className="card__items">
           <Card>
             <CardBody
@@ -95,7 +98,7 @@ const Home = () => {
             </CardBody>
           </Card>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

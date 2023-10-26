@@ -68,7 +68,7 @@ const Header = () => {
               </div>
             ) : (
               <div className="header__menu header__menu-user">
-                <NavLink to={"/my-machines"} className="normal">
+                <NavLink to={"/my-machines"} >
                   <Button> Мої апарати</Button>
                 </NavLink>
               </div>

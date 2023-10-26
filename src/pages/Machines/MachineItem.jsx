@@ -6,6 +6,7 @@ import axios from "../../utils/axios";
 import moment from "moment";
 import "moment/locale/uk";
 import { useSelector } from "react-redux";
+import { Button } from "@chakra-ui/react";
 const MachineItem = ({ item, setSmsStatusInfo }) => {
   const userData = useSelector((state) => state.auth.data);
 
@@ -143,20 +144,20 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <button onClick={() => sendSms(1, item, liters)} className="normal">
+            <Button onClick={() => sendSms(1, item, liters)} className="normal">
               Видати воду
-            </button>
+            </Button>
           </div>
         </div>
       </div>
       {collapse && (
         <div className="water__bottom-menu">
-          <button onClick={() => restartModule(2, item)} className="normal">
+          <Button onClick={() => restartModule(2, item)} className="normal">
             Перезавантажити GSM MODULE
-          </button>
-          <button onClick={() => collectCash(3, item)} className="normal">
+          </Button>
+          <Button onClick={() => collectCash(3, item)} className="normal">
             Collect Cash
-          </button>
+          </Button>
           <div className="water__bottom-menu-control">
             <input
               type="number"
@@ -164,12 +165,12 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
               onChange={(e) => setPriceForLitter(e.target.value)}
             />
             <span>Ціна : 150 = 1.5 грн</span>
-            <button
+            <Button
               onClick={(e) => priceForLiter(4, item, priceForLitter)}
               className="normal"
             >
               Встановити ціну за літр
-            </button>
+            </Button>
           </div>
         </div>
       )}
