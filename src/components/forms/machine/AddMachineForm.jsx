@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddMachineForm.scss";
 import axios from "../../../utils/axios";
+import { Input } from "@chakra-ui/react";
 const AddMachineForm = ({ companies }) => {
   const [resultMsg, setResultMsg] = useState("");
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const AddMachineForm = ({ companies }) => {
   return (
     <form onSubmit={handleSubmitForm} className="add__machine-form">
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="machine_id"
           placeholder="Код апарату"
@@ -49,7 +50,7 @@ const AddMachineForm = ({ companies }) => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="address"
           required={true}
@@ -59,7 +60,7 @@ const AddMachineForm = ({ companies }) => {
         />
       </div>
       <div className="form__control">
-        {/* <input
+        {/* <Input
           type="text"
           name="company_id"
           placeholder="Компанія"
@@ -84,7 +85,7 @@ const AddMachineForm = ({ companies }) => {
         </select>
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="machine_phone"
           placeholder="Сім.номер терміналу"
@@ -94,7 +95,7 @@ const AddMachineForm = ({ companies }) => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="terminal_sim"
           placeholder="Додатковий номер"
@@ -103,7 +104,7 @@ const AddMachineForm = ({ companies }) => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="machine_pin"
           placeholder="ПІН"

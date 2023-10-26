@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./AddUserForm.scss";
 import axios from "../../../utils/axios";
+import { Input } from "@chakra-ui/react";
 const AddUserForm = () => {
   const [resultMsg, setResultMsg] = useState("");
   const [companies, setCompanies] = useState([]);
@@ -67,7 +68,7 @@ const AddUserForm = () => {
   return (
     <form className="add__user-form" onSubmit={handleSubmitUser}>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="surname"
           placeholder="Прізвище"
@@ -76,7 +77,7 @@ const AddUserForm = () => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="name"
           placeholder="Ім'я"
@@ -86,7 +87,7 @@ const AddUserForm = () => {
       </div>
 
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="last_surname"
           placeholder="По батькові"
@@ -95,7 +96,7 @@ const AddUserForm = () => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="email"
           placeholder="E-mail"
@@ -104,7 +105,7 @@ const AddUserForm = () => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="password"
           placeholder="Пароль"
@@ -113,7 +114,7 @@ const AddUserForm = () => {
         />
       </div>
       <div className="form__control">
-        <input
+        <Input
           type="text"
           name="tel"
           placeholder="Телефон"
@@ -122,7 +123,7 @@ const AddUserForm = () => {
         />
       </div>
       <div className="form__control">
-        {/* <input
+        {/* <Input
           type="text"
           name="company_id"
           placeholder="Компанія"

@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./LoginForm.scss";
 import axios from "../../../utils/axios";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchAuth } from "../../../redux/slices/auth";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  useColorMode,
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 const LoginForm = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const token = window.localStorage.getItem("token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,31 +43,41 @@ const LoginForm = () => {
 
   useEffect(() => {}, [token]);
 
-//   if (token) {
-//     return navigate("/");
-//   }
+  //   if (token) {
+  //     return navigate("/");
+  //   }
   return (
-    <form onSubmit={signIn} className="login__form">
-      <div className="form__control">
-        {/* <label>Login</label> */}
-        <input
-          type="text"
-          placeholder="E-mail"
+    <form display onSubmit={signIn} className="login__form">
+      <FormControl>
+        <FormLabel>Email address</FormLabel>
+        <Input
+          type="email"
           name="email"
+          placeholder="Email"
           onChange={handleInputChange}
         />
-      </div>
-      <div className="form__control">
-        {/* <label>Password</label> */}
-        <input
+        {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+      </FormControl>
+
+      <FormControl>
+        <FormLabel>Email address</FormLabel>
+        <Input
           type="pasword"
           placeholder="Password"
           name="password"
           onChange={handleInputChange}
         />
-      </div>
+        {/* <FormHelperText>Password input</FormHelperText> */}
+      </FormControl>
 
-      <button type="submit" className="normal">Увійти</button>
+      <Box display={"flex"} gap={'10px'} marginTop={"20px"} justifyContent={"space-between"}>
+        <Button type="submit" className="normal">
+          Увійти
+        </Button>
+        <Button onClick={toggleColorMode}>
+          {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+        </Button>
+      </Box>
     </form>
   );
 };

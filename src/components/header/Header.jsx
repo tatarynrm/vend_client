@@ -4,7 +4,31 @@ import DarkMode from "../darkMode/DarkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/auth";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  Button,
+  Menu,
+  useColorMode,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Avatar,
+  Box,
+  Text,
+  Divider,
+} from "@chakra-ui/react";
+import {
+  ChevronDownIcon,
+  MoonIcon,
+  SunIcon,
+  UnlockIcon,
+} from "@chakra-ui/icons";
+
 const Header = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -17,46 +41,69 @@ const Header = () => {
   };
   return (
     <header className="header">
-      <div     className="header__inner container">
-        {userData ? <div className="logo">
-          <NavLink className="normal" to={'/'} >VEND MARKET</NavLink>
-        </div> : null}
+      <div className="header__inner container">
+        {userData ? (
+          <div className="logo">
+            <NavLink to={"/"}>
+              <Button>VEND MARKET</Button>
+            </NavLink>
+          </div>
+        ) : null}
         {userData ? (
           <div className="navigation">
             {userData?.role === 1 ? (
               <div className="header__menu header__menu-admin">
-                <NavLink to={'/users'} className="normal">Користувачі</NavLink>
-                <NavLink to={'/clients'} className="normal">Клієнти</NavLink>
-                <NavLink to={'/machines'} className="normal">Апарати</NavLink>
-                <NavLink to={'/sms'} className="normal">SMS</NavLink>
+                <NavLink to={"/users"}>
+                  <Button>Користувачі</Button>
+                </NavLink>
+                <NavLink to={"/clients"}>
+                  <Button>Клієнти</Button>
+                </NavLink>
+                <NavLink to={"/machines"}>
+                  <Button>Апарати</Button>
+                </NavLink>
+                <NavLink to={"/sms"}>
+                  <Button>SMS</Button>
+                </NavLink>
               </div>
             ) : (
               <div className="header__menu header__menu-user">
-                <NavLink to={'/my-machines'} className="normal">Мої апарати</NavLink>
+                <NavLink to={"/my-machines"} className="normal">
+                  <Button> Мої апарати</Button>
+                </NavLink>
               </div>
             )}
           </div>
         ) : null}
-        <DarkMode />
+        {/* <DarkMode /> */}
+
         {userData ? (
-          <div
-            onClick={() => setUserOptions((val) => !val)}
-            className="normal"
-          >
-            {userData?.name?.charAt(0)}.{userData?.surname}
-          </div>
+          <Menu>
+            <MenuButton cursor={"pointer"} as={Avatar}>
+              {/* {userData?.name?.charAt(0)}.{userData?.surname} */}
+            </MenuButton>
+            <MenuList>
+              <Divider />
+              <MenuItem>
+                <a href="tel:0958009195">Технічна підтримка</a>
+              </MenuItem>
+              <MenuItem>0958009195</MenuItem>
+              <Divider />
+              <Divider height={"10px"} />
+              <MenuItem onClick={toggleColorMode}>
+                <Button>
+                  Змінити тему
+                  {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={logoutFromAccount}>
+                <Text>Вийти</Text>
+                <UnlockIcon marginLeft={"5px"} />
+              </MenuItem>
+            </MenuList>
+          </Menu>
         ) : null}
-        {userOptions && (
-          <div className="user__options">
-            <div onClick={()=>setUserOptions(false)}  className="close__user-options">Закрити меню X</div>
-            <p>{userData?.email}</p> <br />
-            <p>{userData?.tel}</p>
-            <button onClick={logoutFromAccount} className="normal">
-              Вийти з аккаунту.
-            </button>
-         
-          </div>
-        )}
       </div>
     </header>
   );

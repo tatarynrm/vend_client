@@ -5,6 +5,7 @@ import { PiUserPlusFill } from "react-icons/pi";
 import { TbUserX } from "react-icons/tb";
 import UserItem from "./UserItem";
 import AddUser from "./AddUser";
+import { Input } from "@chakra-ui/react";
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [addNewUser, setAddNewUser] = useState(false);
@@ -43,7 +44,7 @@ const Users = () => {
         )}
         {addNewUser ? <AddUser /> : null}
         <div className="search">
-          <input
+          <Input
             type="text"
             placeholder="Пошук"
             onChange={(e) => setSearch(e.target.value)}

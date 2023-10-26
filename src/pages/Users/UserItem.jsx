@@ -3,6 +3,7 @@ import { FcHighPriority } from "react-icons/fc";
 import moment from "moment";
 import "moment/locale/uk";
 import axios from "../../utils/axios";
+import { Input } from "@chakra-ui/react";
 const UserItem = ({ item }) => {
   console.log(item);
   const [formData, setFormData] = useState({
@@ -87,7 +88,7 @@ const UserItem = ({ item }) => {
       {collapse && (
         <div className="user__functions">
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Прізвище"
               name="surname"
@@ -96,7 +97,7 @@ const UserItem = ({ item }) => {
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Ім'я"
               name="name"
@@ -105,7 +106,7 @@ const UserItem = ({ item }) => {
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="По-батькові"
               name="last_surname"
@@ -114,7 +115,7 @@ const UserItem = ({ item }) => {
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Логін"
               name="email"
@@ -123,7 +124,7 @@ const UserItem = ({ item }) => {
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Пароль"
               name="password"
@@ -132,7 +133,7 @@ const UserItem = ({ item }) => {
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Пароль"
               name="tel"

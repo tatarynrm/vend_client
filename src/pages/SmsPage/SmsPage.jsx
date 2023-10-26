@@ -4,6 +4,7 @@ import axios from "../../utils/axios";
 import moment from "moment";
 import "moment/locale/uk";
 import ExportExcel from "../../components/excel/ExportExcel";
+import { Input, Select, SelectField } from "@chakra-ui/react";
 const SmsPage = () => {
   const [search, setSearch] = useState("");
   const [sms, setSms] = useState([]);
@@ -102,17 +103,17 @@ const SmsPage = () => {
     <div className="sms page">
       <div className="sms__inner container">
         <div className="form__control">
-          <input
+          <Input
             type="date"
             name="from"
             onChange={(e) => setDateFrom(e.target.value)}
           />
-          <input
+          <Input
             type="date"
             name="to"
             onChange={(e) => setDateTo(e.target.value)}
           />
-          <select
+          <Select
             onChange={(e) => setCompanyId(e.target.value)}
             name="company_id"
             value={companyId}
@@ -127,7 +128,7 @@ const SmsPage = () => {
                   );
                 })
               : null}
-          </select>
+          </Select>
           <button
             onClick={
               companyId !== null ? selectSmsByDateAndCompany : selectSmsByDate
@@ -141,7 +142,7 @@ const SmsPage = () => {
           <span className="total__price-sms">
             Загальна вартість смс становить : {totalPrice} грн
           </span>
-          <input
+          <Input
             type="text"
             placeholder="Пошук"
             onChange={(e) => setSearch(e.target.value)}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Home.scss";
-import axios from '../../utils/axios'
+import axios from "../../utils/axios";
+import { Card, CardBody, Text } from "@chakra-ui/react";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [allMachines, setAllMachines] = useState([]);
-  const [companies,setCompanies] = useState([])
+  const [companies, setCompanies] = useState([]);
   const getAllUsers = async () => {
     try {
       const data = await axios("/user");
@@ -33,7 +34,7 @@ const Home = () => {
       const data = await axios.get("/client");
       console.log(data);
       if (data.status === 200) {
-          setCompanies(data.data)
+        setCompanies(data.data);
       }
     } catch (error) {
       console.log(error);
@@ -42,38 +43,59 @@ const Home = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
-  
+
   useEffect(() => {
     getAllMachines();
   }, []);
 
   useEffect(() => {
-
     getAllCompanies();
   }, []);
-console.log(allMachines);
+  console.log(allMachines);
   return (
     <div className="home page">
       <div className="home__inner container"></div>
 
+      <div className="cards">
+        <div className="card__items">
+          <Card>
+            <CardBody
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Text> Користувачів </Text>
+              <Text>{users?.filter((item) => item.id !== null).length}</Text>
+            </CardBody>
+          </Card>
 
-<div className="cards">
-  <div className="card__items">
-    <div className="card__item">
-      <span>Користувачів</span>
-    <span>{users?.filter(item => item.id !== null).length}</span>
-    </div>
-    <div className="card__item">
-    <span>Компаній</span>
-    <span>{companies?.filter(item => item.id !== null).length}</span>
-    </div>
-    <div className="card__item">
-    <span>Апаратів</span>
-    <span>{allMachines?.filter(item => item.machine_id !== null).length}</span>
-    </div>
-  </div>
-</div>
+          <Card>
+            <CardBody
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Text>Компаній</Text>
+              <Text>
+                {companies?.filter((item) => item.id !== null).length}
+              </Text>
+            </CardBody>
+          </Card>
 
+          <Card>
+            <CardBody
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              <Text>Апаратів</Text>
+              <Text>
+                {allMachines?.filter((item) => item.machine_id !== null).length}
+              </Text>
+            </CardBody>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

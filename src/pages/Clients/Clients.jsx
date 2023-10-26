@@ -6,6 +6,7 @@ import { BsBuildingAdd } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import AddUser from "../Users/AddUser";
 import AddClientForm from "../../components/forms/client/AddClientForm";
+import { Input } from "@chakra-ui/react";
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [addNewClient, setAddNewClient] = useState(false);
@@ -43,7 +44,7 @@ const Clients = () => {
         )}
         {addNewClient ? <AddClientForm /> : null}
         <div className="search">
-          <input
+          <Input
             type="text"
             placeholder="Пошук"
             onChange={(e) => setSearch(e.target.value)}

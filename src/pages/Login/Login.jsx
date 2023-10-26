@@ -1,15 +1,19 @@
-import React from 'react'
-import './Login.scss'
-import LoginForm from '../../components/forms/login/LoginForm'
-import axios from '../../utils/axios'
+import React from "react";
+import "./Login.scss";
+import LoginForm from "../../components/forms/login/LoginForm";
+import axios from "../../utils/axios";
+import { Stack } from "@chakra-ui/react";
 const Login = () => {
-
   return (
-    <div className='login'>
-        <LoginForm/>
+    <Stack
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      height={"100vh"}
+    >
+      <LoginForm />
+    </Stack>
+  );
+};
 
-    </div>
-  )
-}
-
-export default Login
+export default Login;

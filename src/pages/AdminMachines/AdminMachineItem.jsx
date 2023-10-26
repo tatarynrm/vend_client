@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/uk";
 import { smsStatusUser } from "../../services/smsServices";
+import { Button, Input } from "@chakra-ui/react";
 const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
   const userData = useSelector((state) => state.auth.data);
   const [collapse, setCollapse] = useState(false);
@@ -310,28 +311,28 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
           {item.terminal_sim ? item.terminal_sim : "Серв.номер не встановлено"}
         </div>
         <div>
-          <button
+          <Button
             onClick={() => {
               setCollapse((val) => !val);
             }}
             className="normal"
           >
             {collapse ? "Приховати" : "Дивитись/Змінити"}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => {
               setAdminFunctions((val) => !val);
             }}
             className="normal"
           >
             {adminFunctions ? "Приховати" : "Сервісні функції"}
-          </button>
+          </Button>
         </div>
       </div>
       {collapse ? (
         <div className="user__functions">
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="machine_id"
               placeholder="Код машини"
@@ -340,7 +341,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="address"
               placeholder="Адреса"
@@ -349,7 +350,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="machine_phone"
               placeholder="Моб тел. апарату"
@@ -358,7 +359,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="machine_pin"
               placeholder="Пін код"
@@ -367,7 +368,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="terminal_sim"
               placeholder="Сервісний номер"
@@ -402,110 +403,110 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             </select>
           </div>
 
-          <button onClick={editMachine} className="normal">
+          <Button onClick={editMachine} className="normal">
             Редагувати
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => deleteMachine(item)}
             style={{ backgroundColor: "red" }}
             className="normal"
           >
             Видалити
-          </button>
+          </Button>
         </div>
       ) : null}
       {adminFunctions ? (
         <div className="admin__functions">
           <div className="form__control">
             <div></div>
-            <button onClick={() => restartModule(2, item)} className="normal">
+            <Button onClick={() => restartModule(2, item)} className="normal">
               Перезавантажити GSM MODULE
-            </button>
+            </Button>
           </div>
           <div className="form__control">
             <div></div>
-            <button onClick={() => collectCash(3, item)} className="normal">
+            <Button onClick={() => collectCash(3, item)} className="normal">
               Collect Cash
-            </button>
+            </Button>
           </div>
           <div className="form__control">
             <div></div>
-            <button onClick={() => getInfo(6, item)} className="normal">
+            <Button onClick={() => getInfo(6, item)} className="normal">
               Get Info
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               defaultValue={item.machine_pin}
               onChange={(e) => setNewPin(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => changePin(5, item, newPin)}
               className="normal"
             >
               Змінити пін
-            </button>
+            </Button>
           </div>
 
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="38098...."
               defaultValue={item.machine_phone}
               onChange={(e) => setNewNumber(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => changeNumber(7, item, newNumber)}
               className="normal"
             >
               Змінити номер модуля
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="ТОКЕН"
               defaultValue={item.machine_token}
               onChange={(e) => setNewToken(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => changeToken(8, item, newToken)}
               className="normal"
             >
               Змінити токен
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="ANTHILL ADDRES"
               defaultValue={item.machine_address}
               onChange={(e) => setNewAnthillAddress(+e.target.value)}
             />
-            <button
+            <Button
               onClick={() => changeAddress(9, item, newAnthillAddress)}
               className="normal"
             >
               Змінити ADR
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               placeholder="Service Number"
               defaultValue={item.terminal_sim}
               onChange={(e) => setServiceNumber(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => changeServiceNumber(10, item, serviceNumber)}
               className="normal"
             >
               Змінити сервісний номер
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="number"
               placeholder="150"
               min={50}
@@ -513,27 +514,27 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               value={priceForLitter}
               onChange={(e) => setPriceForLitter(e.target.value)}
             />
-            <button
+            <Button
               onClick={(e) => priceForLiter(4, item, priceForLitter)}
               className="normal"
             >
               Встановити ціну за літр
-            </button>
+            </Button>
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="number"
               min={1}
               max={70}
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <button
+            <Button
               onClick={() => addLiters(1, item, liters)}
               className="normal"
             >
               Видати воду
-            </button>
+            </Button>
           </div>
         </div>
       ) : null}

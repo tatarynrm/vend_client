@@ -5,6 +5,7 @@ import AdminMachineItem from "./AdminMachineItem";
 import { GiVendingMachine } from "react-icons/gi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import AddMachineForm from "../../components/forms/machine/AddMachineForm";
+import { Input } from "@chakra-ui/react";
 const AdminMachines = () => {
   const [allMachines, setAllMachines] = useState([]);
   const [companies,setCompanies] = useState([])
@@ -66,7 +67,7 @@ console.log(companies);
         )}
         {addNewMachine ? <AddMachineForm companies={companies} /> : null}
         <div className="search">
-          <input
+          <Input
             type="text"
             placeholder="Пошук"
             onChange={(e) => setSearch(e.target.value)}

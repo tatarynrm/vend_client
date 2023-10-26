@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BiSolidPhoneCall, BiSolidPhoneOff } from "react-icons/bi";
 import axios from '../../utils/axios'
+import { Button, Input } from "@chakra-ui/react";
 const ClientItem = ({ item }) => {
   const [collapse, setCollapse] = useState(false);
   const [formData, setFormData] = useState({});
@@ -64,14 +65,14 @@ console.log(+formData.company_code);
             </span>
           )}
         </div>
-        <button onClick={() => setCollapse((val) => !val)} className="normal">
+        <Button onClick={() => setCollapse((val) => !val)} >
           {collapse ? "Приховати" : "Переглянути/Змінити"}
-        </button>
+        </Button>
       </div>
       {collapse ? (
         <div className="user__functions">
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="company_name"
               placeholder="Назва компанії"
@@ -80,7 +81,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="director_surname"
               placeholder="Прізвище директора"
@@ -89,7 +90,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="director_name"
               placeholder="Ім'я директора"
@@ -98,7 +99,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="director_last_surname"
               placeholder="По-батькові"
@@ -107,7 +108,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="company_code"
               placeholder="Код ЄРДПОУ / ІПН"
@@ -116,7 +117,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="legal_address"
               placeholder="Адреса"
@@ -125,7 +126,7 @@ console.log(+formData.company_code);
             />
           </div>
           <div className="form__control">
-            <input
+            <Input
               type="text"
               name="phone_number"
               placeholder="Номер телефону"
@@ -134,8 +135,8 @@ console.log(+formData.company_code);
             />
           </div>
 
-          <button onClick={editClient} className="normal">Редагувати</button>
-          <button onClick={()=> deleteClient(item)} style={{backgroundColor:"red"}} className="normal">Видалити</button>
+          <Button  onClick={editClient} >Редагувати</Button>
+          <Button onClick={()=> deleteClient(item) }colorScheme='red' >Видалити</Button>
         </div>
       ) : null}
     </React.Fragment>
