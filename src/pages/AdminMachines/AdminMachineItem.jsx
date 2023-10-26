@@ -315,7 +315,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             onClick={() => {
               setCollapse((val) => !val);
             }}
-            className="normal"
+            
           >
             {collapse ? "Приховати" : "Дивитись/Змінити"}
           </Button>
@@ -323,7 +323,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             onClick={() => {
               setAdminFunctions((val) => !val);
             }}
-            className="normal"
+            
           >
             {adminFunctions ? "Приховати" : "Сервісні функції"}
           </Button>
@@ -403,13 +403,13 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             </select>
           </div>
 
-          <Button onClick={editMachine} className="normal">
+          <Button onClick={editMachine} >
             Редагувати
           </Button>
           <Button
             onClick={() => deleteMachine(item)}
             style={{ backgroundColor: "red" }}
-            className="normal"
+            
           >
             Видалити
           </Button>
@@ -419,19 +419,19 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
         <div className="admin__functions">
           <div className="form__control">
             <div></div>
-            <Button onClick={() => restartModule(2, item)} className="normal">
+            <Button onClick={() => restartModule(2, item)} >
               Перезавантажити GSM MODULE
             </Button>
           </div>
           <div className="form__control">
             <div></div>
-            <Button onClick={() => collectCash(3, item)} className="normal">
+            <Button onClick={() => collectCash(3, item)} >
               Collect Cash
             </Button>
           </div>
           <div className="form__control">
             <div></div>
-            <Button onClick={() => getInfo(6, item)} className="normal">
+            <Button onClick={() => getInfo(6, item)} >
               Get Info
             </Button>
           </div>
@@ -443,7 +443,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changePin(5, item, newPin)}
-              className="normal"
+              
             >
               Змінити пін
             </Button>
@@ -458,7 +458,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changeNumber(7, item, newNumber)}
-              className="normal"
+              
             >
               Змінити номер модуля
             </Button>
@@ -472,7 +472,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changeToken(8, item, newToken)}
-              className="normal"
+              
             >
               Змінити токен
             </Button>
@@ -486,7 +486,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changeAddress(9, item, newAnthillAddress)}
-              className="normal"
+              
             >
               Змінити ADR
             </Button>
@@ -500,7 +500,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changeServiceNumber(10, item, serviceNumber)}
-              className="normal"
+              
             >
               Змінити сервісний номер
             </Button>
@@ -516,7 +516,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={(e) => priceForLiter(4, item, priceForLitter)}
-              className="normal"
+              
             >
               Встановити ціну за літр
             </Button>
@@ -531,7 +531,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => addLiters(1, item, liters)}
-              className="normal"
+              
             >
               Видати воду
             </Button>

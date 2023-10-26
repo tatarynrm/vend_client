@@ -21,10 +21,15 @@
     width: 40px;
 }
     div {
-        width: 250px;
+        width: 300px;
         display: flex;
         text-align: left;
         align-items: center;
+        gap: 20px;
+
+        button {
+            width: 100%;
+        }
     }
 }
 
@@ -46,6 +51,7 @@
 .admin__functions{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 20px;
 }
 @media screen  and (max-width: 768px) {  

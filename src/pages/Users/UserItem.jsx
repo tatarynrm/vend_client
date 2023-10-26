@@ -3,7 +3,7 @@ import { FcHighPriority } from "react-icons/fc";
 import moment from "moment";
 import "moment/locale/uk";
 import axios from "../../utils/axios";
-import { Input } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 const UserItem = ({ item }) => {
   console.log(item);
   const [formData, setFormData] = useState({
@@ -79,9 +79,9 @@ const UserItem = ({ item }) => {
           )}
         </div>
         <div>
-          <button onClick={() => setCollapse((val) => !val)} className="normal">
+          <Button onClick={() => setCollapse((val) => !val)}>
             {collapse ? "Приховати" : "Переглянути/Змінити"}
-          </button>
+          </Button>
         </div>
       </div>
 
