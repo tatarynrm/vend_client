@@ -9,8 +9,8 @@ import theme from "./theme";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
-    <ChakraProvider>
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <ChakraProvider theme={theme}>
+    {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
       <Provider store={store}>
         <App />
       </Provider>
