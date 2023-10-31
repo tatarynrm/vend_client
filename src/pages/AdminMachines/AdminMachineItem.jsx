@@ -17,7 +17,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
   const [newToken, setNewToken] = useState("");
   const [newAnthillAddress, setNewAnthillAddress] = useState("");
   const [serviceNumber, setServiceNumber] = useState("");
-  const [cahngeCompany,setChangeCompany] = useState([])
+  const [cahngeCompany, setChangeCompany] = useState([]);
   console.log(item);
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
@@ -26,14 +26,16 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
       setPriceForLitter(inputValue);
     }
   };
-  const setNewCompany = (event)=>{
+  const setNewCompany = (event) => {
     setChangeCompany([
-     { company_name:event.target.options[event.target.selectedIndex].text,
-      company_id:+event.target.value}
-    ])
-  }
+      {
+        company_name: event.target.options[event.target.selectedIndex].text,
+        company_id: +event.target.value,
+      },
+    ]);
+  };
   console.log(cahngeCompany);
-const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
+  const defaultCompany = companies.filter((com, idx) => com.id === item.id);
   useEffect(() => {
     if (item) {
       setFormData({
@@ -42,13 +44,11 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
         machine_phone: item.machine_phone,
         terminal_sim: item.terminal_sim,
         machine_pin: item.machine_pin,
-        company_id: cahngeCompany[0]?.company_id 
+        company_id: cahngeCompany[0]?.company_id,
       });
     }
   }, [cahngeCompany]);
-  useEffect(()=>{
-
-  },[])
+  useEffect(() => {}, []);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -66,9 +66,13 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
   };
   const deleteMachine = async (item) => {
     try {
-      const data = await axios.post("/machine/delete", { id: item.machine_id });
-      if (data.status === 200) {
-        window.location.reload();
+      if (window.confirm("Видалити апарат?")) {
+        const data = await axios.post("/machine/delete", {
+          id: item.machine_id,
+        });
+        if (data.status === 200) {
+          window.location.reload();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -315,7 +319,6 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             onClick={() => {
               setCollapse((val) => !val);
             }}
-            
           >
             {collapse ? "Приховати" : "Дивитись/Змінити"}
           </Button>
@@ -323,7 +326,6 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             onClick={() => {
               setAdminFunctions((val) => !val);
             }}
-            
           >
             {adminFunctions ? "Приховати" : "Сервісні функції"}
           </Button>
@@ -377,20 +379,21 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
           </div>
           <div className="form__control">
-      <span style={{backgroundColor:'green',padding:"0.4rem"}}>
-        {cahngeCompany.length > 0 ? cahngeCompany[0]?.company_name : companies?.map((val,idx)=>{
-        if (val.id === item.id) {
-          return val.company_name
-        }
-      }) }
-        {/* {companies?.map((val,idx)=>{
+            <span style={{ backgroundColor: "green", padding: "0.4rem" }}>
+              {cahngeCompany.length > 0
+                ? cahngeCompany[0]?.company_name
+                : companies?.map((val, idx) => {
+                    if (val.id === item.id) {
+                      return val.company_name;
+                    }
+                  })}
+              {/* {companies?.map((val,idx)=>{
         if (val.id === item.id) {
           return val.company_name
         }
       })} */}
-      
-      </span>
-            <select onChange={(event)=>setNewCompany(event) }>
+            </span>
+            <select onChange={(event) => setNewCompany(event)}>
               {companies
                 ?.sort((a, b) => b.company_name - a.company_name)
                 .map((val, idx) => {
@@ -403,13 +406,10 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             </select>
           </div>
 
-          <Button onClick={editMachine} >
-            Редагувати
-          </Button>
+          <Button onClick={editMachine}>Редагувати</Button>
           <Button
             onClick={() => deleteMachine(item)}
             style={{ backgroundColor: "red" }}
-            
           >
             Видалити
           </Button>
@@ -419,21 +419,17 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
         <div className="admin__functions">
           <div className="form__control">
             <div></div>
-            <Button onClick={() => restartModule(2, item)} >
+            <Button onClick={() => restartModule(2, item)}>
               Перезавантажити GSM MODULE
             </Button>
           </div>
           <div className="form__control">
             <div></div>
-            <Button onClick={() => collectCash(3, item)} >
-              Collect Cash
-            </Button>
+            <Button onClick={() => collectCash(3, item)}>Collect Cash</Button>
           </div>
           <div className="form__control">
             <div></div>
-            <Button onClick={() => getInfo(6, item)} >
-              Get Info
-            </Button>
+            <Button onClick={() => getInfo(6, item)}>Get Info</Button>
           </div>
           <div className="form__control">
             <Input
@@ -441,10 +437,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               defaultValue={item.machine_pin}
               onChange={(e) => setNewPin(e.target.value)}
             />
-            <Button
-              onClick={() => changePin(5, item, newPin)}
-              
-            >
+            <Button onClick={() => changePin(5, item, newPin)}>
               Змінити пін
             </Button>
           </div>
@@ -456,10 +449,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               defaultValue={item.machine_phone}
               onChange={(e) => setNewNumber(e.target.value)}
             />
-            <Button
-              onClick={() => changeNumber(7, item, newNumber)}
-              
-            >
+            <Button onClick={() => changeNumber(7, item, newNumber)}>
               Змінити номер модуля
             </Button>
           </div>
@@ -470,10 +460,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               defaultValue={item.machine_token}
               onChange={(e) => setNewToken(e.target.value)}
             />
-            <Button
-              onClick={() => changeToken(8, item, newToken)}
-              
-            >
+            <Button onClick={() => changeToken(8, item, newToken)}>
               Змінити токен
             </Button>
           </div>
@@ -484,10 +471,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               defaultValue={item.machine_address}
               onChange={(e) => setNewAnthillAddress(+e.target.value)}
             />
-            <Button
-              onClick={() => changeAddress(9, item, newAnthillAddress)}
-              
-            >
+            <Button onClick={() => changeAddress(9, item, newAnthillAddress)}>
               Змінити ADR
             </Button>
           </div>
@@ -500,7 +484,6 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
             />
             <Button
               onClick={() => changeServiceNumber(10, item, serviceNumber)}
-              
             >
               Змінити сервісний номер
             </Button>
@@ -514,10 +497,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               value={priceForLitter}
               onChange={(e) => setPriceForLitter(e.target.value)}
             />
-            <Button
-              onClick={(e) => priceForLiter(4, item, priceForLitter)}
-              
-            >
+            <Button onClick={(e) => priceForLiter(4, item, priceForLitter)}>
               Встановити ціну за літр
             </Button>
           </div>
@@ -529,10 +509,7 @@ const defaultCompany = companies.filter((com,idx)=> com.id === item.id)
               value={liters}
               onChange={(e) => setLiters(e.target.value)}
             />
-            <Button
-              onClick={() => addLiters(1, item, liters)}
-              
-            >
+            <Button onClick={() => addLiters(1, item, liters)}>
               Видати воду
             </Button>
           </div>

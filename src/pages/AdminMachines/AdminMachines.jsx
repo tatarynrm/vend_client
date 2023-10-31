@@ -91,14 +91,14 @@ console.log(companies);
               .filter((item) =>
               search.toLocaleLowerCase() === ""
                 ? item
-                : item.machine_id.toString().toLowerCase().includes(search) ||
-                  item.machine_id.toString().toUpperCase().includes(search) ||
-                  item.company_name.toLowerCase().includes(search) ||
-                  item.company_name.toUpperCase().includes(search) ||
-                  item.machine_phone.toLowerCase().includes(search) ||
-                  item.machine_phone.toUpperCase().includes(search) ||
-                  item.address.toLowerCase().includes(search) ||
-                  item.address.toUpperCase().includes(search) 
+                : item?.machine_id?.toString().toLowerCase().includes(search) ||
+                  item?.machine_id?.toString().toUpperCase().includes(search) ||
+                  item?.company_name?.toLowerCase().includes(search) ||
+                  item?.company_name?.toUpperCase().includes(search) ||
+                  item?.machine_phone?.toString().includes(search) ||
+                  item?.machine_phone?.toString().includes(search) ||
+                  item?.address?.toLowerCase().includes(search) ||
+                  item?.address?.toUpperCase().includes(search) 
             )
               .map((item, idx) => {
                 return <AdminMachineItem companies={companies}  setSmsStatusInfo={setSmsStatusInfo} key={idx} idx={idx} item={item} />;
