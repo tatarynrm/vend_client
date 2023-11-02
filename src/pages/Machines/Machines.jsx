@@ -4,6 +4,7 @@ import "./Machine.scss";
 import axios from "../../utils/axios";
 
 import MachineItem from "./MachineItem";
+import { Stack, Text } from "@chakra-ui/react";
 const Machines = () => {
   const userData = useSelector((state) => state.auth.data);
   const [machine, setMachine] = useState([]);
@@ -18,7 +19,6 @@ const Machines = () => {
       if (data.status === 200) {
         setMachine(data.data);
       }
-    
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +29,7 @@ const Machines = () => {
     }
   }, [userData]);
   useEffect(() => {}, [smsStatusInfo]);
-
+  console.log("2313321", userData);
   return (
     <div className="machine page">
       <div className="machine__inner container">
@@ -39,19 +39,37 @@ const Machines = () => {
               {smsStatusInfo}
             </span>
           )}
-          
-          {machine ? (
-            machine.map((item, idx) => {
-              return (
-                <MachineItem
-                  setSmsStatusInfo={setSmsStatusInfo}
-                  key={idx}
-                  item={item}
-                />
-              );
-            })
+
+          {userData?.active === 0 ? (
+            <Stack
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              height={"70vh"}
+            >
+              <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
+                Обмеження аккаунту через неоплату (SMS)
+              </Text>
+              <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
+                Зверніться до адміністратора
+              </Text>
+            </Stack>
           ) : (
-            <div>Немає апаратів до відображення</div>
+            <Stack>
+              {machine ? (
+                machine.map((item, idx) => {
+                  return (
+                    <MachineItem
+                      setSmsStatusInfo={setSmsStatusInfo}
+                      key={idx}
+                      item={item}
+                    />
+                  );
+                })
+              ) : (
+                <div>Немає апаратів до відображення</div>
+              )}
+            </Stack>
           )}
         </div>
       </div>

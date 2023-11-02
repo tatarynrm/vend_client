@@ -6,7 +6,7 @@ import axios from "../../utils/axios";
 import moment from "moment";
 import "moment/locale/uk";
 import { useSelector } from "react-redux";
-import { Button } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 const MachineItem = ({ item, setSmsStatusInfo }) => {
   const userData = useSelector((state) => state.auth.data);
 
@@ -16,7 +16,8 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   const [priceForLitter, setPriceForLitter] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [formData, setFormData] = useState({});
-  const [smsTitle, setSmsTitle] = useState(null);
+  const [numberTitle,setNumberTitle ] = useState(null);
+  const [addressTitle,setAddressTitle] = useState(null);
 
   const restartModule = async (smsStatus, smsInfo) => {
     try {
@@ -121,12 +122,28 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
         });
         console.log(result.status);
         if (result.status === 200) {
-          setSmsTitle(`Номер телефону успішно змінено`);
+          setNumberTitle(`Номер телефону успішно змінено`);
           setTimeout(() => {
             window.location.reload();
           }, 2000);
         }
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const  changeAdress = async (item,data) => {
+    try {
+if (window.confirm('Змінити адресу ?')) {
+  const result = await axios.post("/machine/change-adress", {id:item.id,address:formData.address});
+   
+  if (result.status === 200) {
+    setAddressTitle(`Адресу успішно змінено`);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+}
     } catch (error) {
       console.log(error);
     }
@@ -149,9 +166,10 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
     if (item) {
       setFormData({
         machine_phone: item.machine_phone,
+        address:item.address
       });
     }
-  }, [smsTitle]);
+  }, [addressTitle,numberTitle]);
   return (
     <React.Fragment>
       <div className="water__machine">
@@ -236,7 +254,33 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             >
               Встановити новий номер телефону
             </Button>
-            {smsTitle && smsTitle}
+            {numberTitle && <Text color={"green.300"}>{numberTitle}</Text>}
+          </div>
+          <div
+            className="water__bottom-menu-control"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Адреса апарату"
+              name="address"
+              value={formData?.address}
+              onChange={changePhoneNumber}
+              style={{
+                width: "100%",
+                padding: "10px",
+              }}
+            />
+            <Button
+              onClick={(e) => changeAdress( item, formData.address)}
+              className="normal"
+            >
+              Встановити нову адресу
+            </Button>
+            {addressTitle && <Text color={"green.300"}>{addressTitle}</Text>}
           </div>
         </div>
       )}

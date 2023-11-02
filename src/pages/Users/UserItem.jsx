@@ -3,9 +3,8 @@ import { FcHighPriority } from "react-icons/fc";
 import moment from "moment";
 import "moment/locale/uk";
 import axios from "../../utils/axios";
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, Stack } from "@chakra-ui/react";
 const UserItem = ({ item }) => {
-  console.log(item);
   const [formData, setFormData] = useState({
     // name: "",
     // surname: "",
@@ -15,6 +14,7 @@ const UserItem = ({ item }) => {
     // tel: "",
     // company_id: "" || 0,
   });
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -32,7 +32,7 @@ const UserItem = ({ item }) => {
         email: item.email,
         password: item.password,
         tel: item.tel,
-        id:item.id
+        id: item.id,
       });
     }
   }, []);
@@ -40,28 +40,38 @@ const UserItem = ({ item }) => {
     try {
       const data = await axios.post("/user/update", formData);
       if (data.status === 200) {
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const deleteUser = async (item)=>{
+  const deleteUser = async (item) => {
     try {
-      if (window.confirm('Ви дійсно хочете видалити користувача?')) {
-        const data = await axios.post('/user/delete',{id:+item.id});
-     
+      if (window.confirm("Ви дійсно хочете видалити користувача?")) {
+        const data = await axios.post("/user/delete", { id: +item.id });
+
         if (data.status === 200) {
-          window.alert('Успішно видалено користувача')
-          window.location.reload()
+          window.alert("Успішно видалено користувача");
+          window.location.reload();
         }
       }
-
     } catch (error) {
       console.log(error);
     }
+  };
+const cancelActiveFalse = async (value)=>{
+  try {
+if (window.confirm(`Зняти обмеження з користувача ${item.surname}?`)) {
+  const data = await axios.post('/user/cancel-active',{id:item.id})
+   if (data.status === 200) {
+    window.location.reload()
+   }
+}
+  } catch (error) {
+    console.log(error);
   }
-  console.log(+item.id);
+}
   return (
     <React.Fragment>
       <div className={`user user-${item.id}`}>
@@ -78,11 +88,12 @@ const UserItem = ({ item }) => {
             <FcHighPriority title="Не підключено" />
           )}
         </div>
-        <div>
+        <Stack>
           <Button onClick={() => setCollapse((val) => !val)}>
             {collapse ? "Приховати" : "Переглянути/Змінити"}
           </Button>
-        </div>
+          {item.active === 0 && <Button onClick={()=>cancelActiveFalse(item.id)} colorScheme="red" width={"100%"}>Зняти обмеження</Button>}
+        </Stack>
       </div>
 
       {collapse && (
@@ -141,10 +152,23 @@ const UserItem = ({ item }) => {
               onChange={handleInputChange}
             />
           </div>
-          <button onClick={editUser} className="normal">Редагувати</button>
-          <button onClick={()=>deleteUser(item)} style={{ backgroundColor: "red" }} className="normal">
+          <Button
+            fontSize={12}
+            whiteSpace={"pre-wrap"}
+            onClick={editUser}
+            className="normal"
+          >
+            Редагувати
+          </Button>
+          <Button
+            fontSize={12}
+            whiteSpace={"pre-wrap"}
+            onClick={() => deleteUser(item)}
+            className="normal"
+            colorScheme="red"
+          >
             Видалити
-          </button>
+          </Button>
         </div>
       )}
     </React.Fragment>
