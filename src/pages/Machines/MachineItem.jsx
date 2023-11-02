@@ -14,6 +14,10 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   const [collapse, setCollapse] = useState(false);
   const [smsStatus, setSmsStatus] = useState(null);
   const [priceForLitter, setPriceForLitter] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [formData, setFormData] = useState({});
+  const [smsTitle, setSmsTitle] = useState(null);
+
   const restartModule = async (smsStatus, smsInfo) => {
     try {
       if (window.confirm("Перезавантажити модуль?")) {
@@ -37,7 +41,7 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   };
   const sendSms = async (smsStatus, smsInfo, liters) => {
     try {
-      if (window.confirm(`Видати ${liters} літрів води?`) & +liters <= 70) {
+      if (window.confirm(`Видати ${liters} літрів води?`) & (+liters <= 70)) {
         const result = await axios.post("/msg", {
           data: {
             smsType: smsStatusUser(smsStatus),
@@ -52,8 +56,9 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             `Видано літрів:${liters}.${moment(new Date()).format("LLL")}`
           );
         }
-      }if (+liters > 70) {
-        window.alert('Завелика кількість літрів')
+      }
+      if (+liters > 70) {
+        window.alert("Завелика кількість літрів");
       }
     } catch (error) {
       console.log(error);
@@ -103,6 +108,29 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
+  const changeNumber = async (smsStatus, smsInfo, newNumber) => {
+    try {
+      if (window.confirm(`Змінити номер?`)) {
+        const result = await axios.post("/msg/change-number", {
+          data: {
+            smsType: smsStatusUser(smsStatus),
+            smsInfo,
+            userData,
+            newNumber: formData.machine_phone,
+          },
+        });
+        console.log(result.status);
+        if (result.status === 200) {
+          setSmsTitle(`Номер телефону успішно змінено`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleInputChange = (event) => {
     // Ensure the input value is not negative
     const inputValue = event.target.value;
@@ -110,8 +138,20 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       setPriceForLitter(inputValue);
     }
   };
-
-
+  const changePhoneNumber = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value.trim(),
+    }));
+  };
+  useEffect(() => {
+    if (item) {
+      setFormData({
+        machine_phone: item.machine_phone,
+      });
+    }
+  }, [smsTitle]);
   return (
     <React.Fragment>
       <div className="water__machine">
@@ -171,6 +211,32 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
             >
               Встановити ціну за літр
             </Button>
+          </div>
+          <div
+            className="water__bottom-menu-control"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Номер телефону апарату"
+              name="machine_phone"
+              value={formData?.machine_phone}
+              onChange={changePhoneNumber}
+              style={{
+                width: "100%",
+                padding: "10px",
+              }}
+            />
+            <Button
+              onClick={(e) => changeNumber(7, item, formData.machine_phone)}
+              className="normal"
+            >
+              Встановити новий номер телефону
+            </Button>
+            {smsTitle && smsTitle}
           </div>
         </div>
       )}
