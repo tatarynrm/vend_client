@@ -13,12 +13,14 @@ const theme = {
     },
     // breakpoints,
     styles:{
-        
+ 
     },
     fonts: {
         heading: `'Open Sans', sans-serif`,
         body: `'Roboto', sans-serif`,
       },
+  
+   
 };
 // 3. extend the theme
 

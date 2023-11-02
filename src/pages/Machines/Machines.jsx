@@ -48,10 +48,10 @@ const Machines = () => {
               height={"70vh"}
             >
               <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
-                Обмеження аккаунту через неоплату (SMS)
+                Внесіть абонплату.
               </Text>
               <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
-                Зверніться до адміністратора
+                Або зверніться до адміністратора.
               </Text>
             </Stack>
           ) : (

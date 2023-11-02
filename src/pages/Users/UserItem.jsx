@@ -88,7 +88,7 @@ if (window.confirm(`Зняти обмеження з користувача ${it
             <FcHighPriority title="Не підключено" />
           )}
         </div>
-        <Stack>
+        <Stack >
           <Button onClick={() => setCollapse((val) => !val)}>
             {collapse ? "Приховати" : "Переглянути/Змінити"}
           </Button>

@@ -60,10 +60,21 @@
         display: flex;
         flex-direction: column;
         height: auto;
+        flex-wrap: wrap;
     }
     .admin__functions{
         display: flex;
         flex-direction: column;
         gap: 20px;
+    }
+}
+
+@media screen  and (max-width: 1050px) {  
+
+    .admin__machine-item {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        flex-wrap: wrap;
     }
 }
