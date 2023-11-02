@@ -14,6 +14,8 @@ import SmsPage from "./pages/SmsPage/SmsPage";
 import Machine from "./pages/Machines/Machines";
 import AdminMachines from "./pages/AdminMachines/AdminMachines";
 import Machines from "./pages/Machines/Machines";
+import LiqPayForm from "./components/liqpay_button/LiqPayForm";
+import PaymentSuccess from "./pages/Payment/PaymentSuccess";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -25,6 +27,7 @@ function App() {
   useEffect(() => {}, [userData]);
   return (
     <div className="vendmarket">
+      {/* <LiqPayForm/> */}
       {userData ? <Header /> : null}
 
       <Routes>
@@ -40,7 +43,10 @@ function App() {
               <Route path="/machines" element={<AdminMachines />} />
             </>
           ) : (
-            <Route path="/my-machines" element={<Machines />} />
+            <>
+              <Route path="/my-machines" element={<Machines />} />
+              <Route path="/payment-success" element={<PaymentSuccess />} />
+            </>
           )}
         </Route>
       </Routes>

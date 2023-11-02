@@ -1,0 +1,25 @@
+<form
+method="POST"
+action="https://www.liqpay.ua/api/3/checkout"
+accept-charset="utf-8"
+>
+<input
+  type="hidden"
+  name="data"
+  value="eyJhY3Rpb24iOiJwYXkiLCJhbW91bnQiOjEsImN1cnJlbmN5IjoiVVNEIiwiZGVzY3JpcHRpb24iOiJkZXNjcmlwdGlvbiB0ZXh0Iiwib3JkZXJfaWQiOiJvcmRlcl9pZF8xIiwidmVyc2lvbiI6MywicHVibGljX2tleSI6InNhbmRib3hfaTMxMTEwNDMwMTI0In0="
+/>
+<input
+  type="hidden"
+  name="signature"
+  value="0YWj8dn+qmEvy7y58yehwzWTzAI="
+/>
+<script
+  type="text/javascript"
+  src="https://static.liqpay.ua/libjs/sdk_button.js"
+></script>
+<sdk-button
+  label="Сплатити"
+  background="#77CC5D"
+  onClick="submit()"
+></sdk-button>
+</form>
