@@ -1,18 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import ReactDOMServer from "react-dom/server";
 import "./Machine.scss";
 import axios from "../../utils/axios";
+import { Parser } from "html-to-react";
 
 import MachineItem from "./MachineItem";
-import { Box, Button, FormControl, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import LiqPayMainButton from "../../components/liqpay_button/LiqPayForm";
 import PaymentForm from "../../components/liqpay_button/LiqPayForm";
 import LiqPayForm from "../../components/liqpay_button/LiqPayForm";
+import LiqPayCheckout from "../../components/liqpay_button/LiqPayCheckout";
 const Machines = () => {
   const userData = useSelector((state) => state.auth.data);
   const [machine, setMachine] = useState([]);
   const [smsStatusInfo, setSmsStatusInfo] = useState(null);
   const [htmlButtonToPay, setHtmlButtonToPay] = useState("");
+  const parse = (val) => val.replace(/^\$/, "");
+  const [amount, setAmount] = useState(100);
+  const fullHTML = ReactDOMServer.renderToString(htmlButtonToPay);
+
+
 
   const getMyMachines = async () => {
     try {
@@ -33,22 +53,35 @@ const Machines = () => {
     }
   }, [userData]);
   useEffect(() => {}, [smsStatusInfo]);
-  console.log("2313321", userData);
 
-  useEffect(() => {
-    const payOrder = async () => {
-      try {
-        const data = await axios.post("/initiate-payment");
-        console.log(data);
-        if (data.data) {
-          setHtmlButtonToPay(data.data);
-        }
-      } catch (error) {
-        console.log(error);
+  const createPayment = async () => {
+    try {
+      const data = await axios.post("/liqpay/create-payment", {
+        amount: amount,
+        user_id:userData?.id
+      });
+     
+      if (data.data) {
+        setHtmlButtonToPay(data.data);
       }
-    };
-    payOrder();
-  }, []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // useEffect(() => {
+  //   const createPayment = async () => {
+  //     try {
+  //       const data = await axios.post("/liqpay/create-payment");
+  //       console.log(data);
+  //       if (data.data) {
+  //         setHtmlButtonToPay(data.data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   createPayment();
+  // }, []);
   return (
     <div className="machine page">
       <div className="machine__inner container">
@@ -72,17 +105,35 @@ const Machines = () => {
               <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
                 Або зверніться до адміністратора.
               </Text>
-              {/* <Button onClick={payOrder}>Оплатити</Button> */}
+              <FormControl as={Stack} display={"flex"} width={"300px"}>
+                <NumberInput
+                  defaultValue={amount}
+                  value={amount}
+                  onChange={(e) => setAmount(parse(e))}
+                  min={100}
+                  max={1000}
+                >
+                  <NumberInputField placeholder="Сума до сплати ?" />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <Button onClick={createPayment} variant={"outline"}>
+                  Сформувати рахунок:
+                </Button>
+              </FormControl>
               {htmlButtonToPay && (
-                <div>
-                  <h2>LiqPay Payment Form</h2>
+                <div  style={{ display: "block" }}>
                   <div
+                   
                     dangerouslySetInnerHTML={{
                       __html: htmlButtonToPay,
                     }}
                   />
                 </div>
               )}
+
               <Box width={"100%"} height={"400px"}></Box>
             </Stack>
           ) : (
