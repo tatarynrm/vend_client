@@ -68,7 +68,7 @@ const Header = () => {
               </div>
             ) : (
               <div className="header__menu header__menu-user">
-                <NavLink to={"/my-machines"} >
+                <NavLink to={"/my-machines"}>
                   <Button> Мої апарати</Button>
                 </NavLink>
               </div>
@@ -97,7 +97,21 @@ const Header = () => {
                 </Button>
               </MenuItem>
               <Divider />
-              <MenuItem onClick={logoutFromAccount}>
+              <Divider />
+              <Divider />
+              <MenuItem>
+                <Box>
+                  <Text>Ваш баланс складає: {userData?.balance} грн</Text>
+                  <Button colorScheme="green">Поповнити баланс</Button>
+                </Box>
+              </MenuItem>
+              <Divider />
+              <Divider />
+              <Divider />
+              <MenuItem
+                _hover={{ backgroundColor: "red.300" }}
+                onClick={logoutFromAccount}
+              >
                 <Text>Вийти</Text>
                 <UnlockIcon marginLeft={"5px"} />
               </MenuItem>
