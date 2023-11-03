@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 const BalanceAdd = () => {
   const userData = useSelector((state) => state.auth.data);
   const parse = (val) => val.replace(/^\$/, "");
-  const [amount, setAmount] = useState(100);
+  const [amount, setAmount] = useState(10);
 
   const [htmlButtonToPay, setHtmlButtonToPay] = useState("");
 
@@ -57,7 +57,7 @@ const BalanceAdd = () => {
           defaultValue={amount}
           value={amount}
           onChange={(e) => setAmount(parse(e))}
-          min={100}
+          min={10}
           max={1000}
         >
           <NumberInputField placeholder="Сума до сплати ?" />
