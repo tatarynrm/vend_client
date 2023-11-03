@@ -16,8 +16,8 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   const [priceForLitter, setPriceForLitter] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [formData, setFormData] = useState({});
-  const [numberTitle,setNumberTitle ] = useState(null);
-  const [addressTitle,setAddressTitle] = useState(null);
+  const [numberTitle, setNumberTitle] = useState(null);
+  const [addressTitle, setAddressTitle] = useState(null);
 
   const restartModule = async (smsStatus, smsInfo) => {
     try {
@@ -132,18 +132,21 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
-  const  changeAdress = async (item,data) => {
+  const changeAdress = async (item, data) => {
     try {
-if (window.confirm('Змінити адресу ?')) {
-  const result = await axios.post("/machine/change-adress", {id:item.id,address:formData.address});
-   
-  if (result.status === 200) {
-    setAddressTitle(`Адресу успішно змінено`);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }
-}
+      if (window.confirm("Змінити адресу ?")) {
+        const result = await axios.post("/machine/change-adress", {
+          id: item.id,
+          address: formData.address,
+        });
+
+        if (result.status === 200) {
+          setAddressTitle(`Адресу успішно змінено`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -159,17 +162,17 @@ if (window.confirm('Змінити адресу ?')) {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value.trim(),
+      [name]: value,
     }));
   };
   useEffect(() => {
     if (item) {
       setFormData({
         machine_phone: item.machine_phone,
-        address:item.address
+        address: item.address,
       });
     }
-  }, [addressTitle,numberTitle]);
+  }, [addressTitle, numberTitle]);
   return (
     <React.Fragment>
       <div className="water__machine">
@@ -182,8 +185,10 @@ if (window.confirm('Змінити адресу ?')) {
         <div className="water__machine-icon">
           <img src={water_machine_photo} alt="water_machine" />
         </div>
-        <div className="water__machine-info">
-          <p className="machine__address">{item.address}</p>
+        <div style={{ whiteSpace: "pre-wrap" }} className="water__machine-info">
+          <p style={{ whiteSpace: "pre-wrap" }} className="machine__address">
+            {item.address}
+          </p>
 
           <p className="machine__address">Код автомату: {item.machine_id}</p>
 
@@ -272,10 +277,11 @@ if (window.confirm('Змінити адресу ?')) {
               style={{
                 width: "100%",
                 padding: "10px",
+                whiteSpace: "pre-wrap",
               }}
             />
             <Button
-              onClick={(e) => changeAdress( item, formData.address)}
+              onClick={(e) => changeAdress(item, formData.address)}
               className="normal"
             >
               Встановити нову адресу

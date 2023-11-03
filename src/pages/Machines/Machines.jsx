@@ -58,7 +58,7 @@ console.log(userData);
     try {
       const data = await axios.post("/liqpay/create-payment", {
         amount: amount,
-        user_id:userData?.id,
+        company_id:userData?.company_id,
         name:userData?.name,
         surname:userData?.surname
       });
@@ -94,7 +94,7 @@ console.log(userData);
             </span>
           )}
 
-          {userData?.active === 0 ? (
+      
             <Stack
               display={"flex"}
               justifyContent={"center"}
@@ -138,7 +138,7 @@ console.log(userData);
 
               <Box width={"100%"} height={"400px"}></Box>
             </Stack>
-          ) : (
+      
             <Stack>
               {machine ? (
                 machine.map((item, idx) => {
@@ -154,7 +154,7 @@ console.log(userData);
                 <div>Немає апаратів до відображення</div>
               )}
             </Stack>
-          )}
+          
         </div>
       </div>
     </div>
