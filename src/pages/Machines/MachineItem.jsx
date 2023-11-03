@@ -180,6 +180,17 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
           window.location.reload();
         }, 3000);
       }
+      if (data.data.status === 400) {
+        onClose();
+        toast({
+          title: "Недостатньо коштів на балансі",
+          description:
+            "Поповніть спочатку ваш баланс.",
+          status: "error",
+          duration: 3000,
+          isClosable: false,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
