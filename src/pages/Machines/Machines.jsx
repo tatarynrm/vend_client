@@ -32,7 +32,7 @@ const Machines = () => {
   const [amount, setAmount] = useState(100);
   const fullHTML = ReactDOMServer.renderToString(htmlButtonToPay);
 
-
+console.log(userData);
 
   const getMyMachines = async () => {
     try {
@@ -58,7 +58,9 @@ const Machines = () => {
     try {
       const data = await axios.post("/liqpay/create-payment", {
         amount: amount,
-        user_id:userData?.id
+        user_id:userData?.id,
+        name:userData?.name,
+        surname:userData?.surname
       });
      
       if (data.data) {
