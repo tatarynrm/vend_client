@@ -16,6 +16,7 @@ import AdminMachines from "./pages/AdminMachines/AdminMachines";
 import Machines from "./pages/Machines/Machines";
 import LiqPayForm from "./components/liqpay_button/LiqPayForm";
 import PaymentSuccess from "./pages/Payment/PaymentSuccess";
+import BalanceAdd from "./pages/BalanceAdd/BalanceAdd";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -46,6 +47,7 @@ function App() {
             <>
               <Route path="/my-machines" element={<Machines />} />
               <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/balance-add" element={<BalanceAdd />} />
             </>
           )}
         </Route>

@@ -32,7 +32,6 @@ const Machines = () => {
   const [amount, setAmount] = useState(100);
   const fullHTML = ReactDOMServer.renderToString(htmlButtonToPay);
 
-console.log(userData);
 
   const getMyMachines = async () => {
     try {
@@ -54,36 +53,9 @@ console.log(userData);
   }, [userData]);
   useEffect(() => {}, [smsStatusInfo]);
 
-  const createPayment = async () => {
-    try {
-      const data = await axios.post("/liqpay/create-payment", {
-        amount: amount,
-        company_id:userData?.company_id,
-        name:userData?.name,
-        surname:userData?.surname
-      });
-     
-      if (data.data) {
-        setHtmlButtonToPay(data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // useEffect(() => {
-  //   const createPayment = async () => {
-  //     try {
-  //       const data = await axios.post("/liqpay/create-payment");
-  //       console.log(data);
-  //       if (data.data) {
-  //         setHtmlButtonToPay(data.data);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   createPayment();
-  // }, []);
+
+
+
   return (
     <div className="machine page">
       <div className="machine__inner container">
@@ -95,49 +67,7 @@ console.log(userData);
           )}
 
       
-            <Stack
-              display={"flex"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              height={"70vh"}
-            >
-              <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
-                Внесіть абонплату.
-              </Text>
-              <Text color={"red.500"} fontWeight={"bold"} fontSize={40}>
-                Або зверніться до адміністратора.
-              </Text>
-              <FormControl as={Stack} display={"flex"} width={"300px"}>
-                <NumberInput
-                  defaultValue={amount}
-                  value={amount}
-                  onChange={(e) => setAmount(parse(e))}
-                  min={100}
-                  max={1000}
-                >
-                  <NumberInputField placeholder="Сума до сплати ?" />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                <Button onClick={createPayment} variant={"outline"}>
-                  Сформувати рахунок:
-                </Button>
-              </FormControl>
-              {htmlButtonToPay && (
-                <div  style={{ display: "block" }}>
-                  <div
-                   
-                    dangerouslySetInnerHTML={{
-                      __html: htmlButtonToPay,
-                    }}
-                  />
-                </div>
-              )}
 
-              <Box width={"100%"} height={"400px"}></Box>
-            </Stack>
       
             <Stack>
               {machine ? (

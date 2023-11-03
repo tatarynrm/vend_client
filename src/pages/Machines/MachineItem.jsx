@@ -6,10 +6,20 @@ import axios from "../../utils/axios";
 import moment from "moment";
 import "moment/locale/uk";
 import { useSelector } from "react-redux";
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import AcceptMachineBalance from "../../components/modals/AcceptMachineBalance";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 const MachineItem = ({ item, setSmsStatusInfo }) => {
   const userData = useSelector((state) => state.auth.data);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [liters, setLiters] = useState(1);
   const [collapse, setCollapse] = useState(false);
   const [smsStatus, setSmsStatus] = useState(null);
@@ -18,6 +28,7 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
   const [formData, setFormData] = useState({});
   const [numberTitle, setNumberTitle] = useState(null);
   const [addressTitle, setAddressTitle] = useState(null);
+  const toast = useToast();
 
   const restartModule = async (smsStatus, smsInfo) => {
     try {
@@ -151,6 +162,29 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       console.log(error);
     }
   };
+  const handleBalanceUp = async (item) => {
+    try {
+      const data = await axios.post("/machine/balance-up", item);
+      if ((data.data === 100) & (data.status === 200)) {
+        onClose();
+        toast({
+          title: "Апарат успішно розблокований",
+          description:
+            "Через декілька секунд сторінка перезавантажиться і ви зможете користуватись усіма функціями.",
+          status: "success",
+          duration: 3000,
+          isClosable: false,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleInputChange = (event) => {
     // Ensure the input value is not negative
     const inputValue = event.target.value;
@@ -173,15 +207,60 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
       });
     }
   }, [addressTitle, numberTitle]);
+
+  console.log(item);
   return (
     <React.Fragment>
       <div className="water__machine">
-        <FcCollapse
-          onClick={() => setCollapse((val) => !val)}
-          size={30}
-          className="collapse__machine"
-          style={{ transform: collapse ? "rotate(0deg)" : "rotate(180deg)" }}
-        />
+        {item.month_balance === 100 || item.month_balance > 100 ? (
+          <FcCollapse
+            onClick={() => setCollapse((val) => !val)}
+            size={30}
+            className="collapse__machine"
+            style={{ transform: collapse ? "rotate(0deg)" : "rotate(180deg)" }}
+          />
+        ) : (
+          <>
+            <Button
+              position={"absolute"}
+              style={{ top: "0", right: "0" }}
+              whiteSpace={"pre-wrap"}
+              colorScheme="red"
+              onClick={onOpen}
+            >
+              Поновити користування
+            </Button>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>
+                  Списати 100 кредитів з основного балансу?
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Text>
+                    З вашого балансу буде списано 100 кредитів. 100 кредитів =
+                    100 грн
+                  </Text>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button colorScheme="red" mr={3} onClick={onClose}>
+                    Відхилити
+                  </Button>
+                  <Button
+                    onClick={() => handleBalanceUp(item)}
+                    variant="ghost"
+                    colorScheme="green"
+                  >
+                    Підтверджую
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </>
+        )}
         <div className="water__machine-icon">
           <img src={water_machine_photo} alt="water_machine" />
         </div>
@@ -199,97 +278,111 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
           </p>
         </div>
         <div className="water__machine-functions">
-          <div className="form__control">
-            <input
-              type="number"
-              min={1}
-              max={70}
-              value={liters}
-              onChange={(e) => setLiters(e.target.value)}
-            />
-            <Button onClick={() => sendSms(1, item, liters)} className="normal">
-              Видати воду
-            </Button>
-          </div>
+          {item.month_balance < 100 ? null : (
+            <div className="form__control">
+              <input
+                type="number"
+                min={1}
+                max={70}
+                value={liters}
+                onChange={(e) => setLiters(e.target.value)}
+              />
+              <Button
+                onClick={() => sendSms(1, item, liters)}
+                className="normal"
+              >
+                Видати воду
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-      {collapse && (
-        <div className="water__bottom-menu">
-          <Button onClick={() => restartModule(2, item)} className="normal">
-            Перезавантажити GSM MODULE
-          </Button>
-          <Button onClick={() => collectCash(3, item)} className="normal">
-            Collect Cash
-          </Button>
-          <div className="water__bottom-menu-control">
-            <input
-              type="number"
-              value={priceForLitter}
-              onChange={(e) => setPriceForLitter(e.target.value)}
-            />
-            <span>Ціна : 150 = 1.5 грн</span>
-            <Button
-              onClick={(e) => priceForLiter(4, item, priceForLitter)}
-              className="normal"
-            >
-              Встановити ціну за літр
-            </Button>
-          </div>
-          <div
-            className="water__bottom-menu-control"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Номер телефону апарату"
-              name="machine_phone"
-              value={formData?.machine_phone}
-              onChange={changePhoneNumber}
-              style={{
-                width: "100%",
-                padding: "10px",
-              }}
-            />
-            <Button
-              onClick={(e) => changeNumber(7, item, formData.machine_phone)}
-              className="normal"
-            >
-              Встановити новий номер телефону
-            </Button>
-            {numberTitle && <Text color={"green.300"}>{numberTitle}</Text>}
-          </div>
-          <div
-            className="water__bottom-menu-control"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Адреса апарату"
-              name="address"
-              value={formData?.address}
-              onChange={changePhoneNumber}
-              style={{
-                width: "100%",
-                padding: "10px",
-                whiteSpace: "pre-wrap",
-              }}
-            />
-            <Button
-              onClick={(e) => changeAdress(item, formData.address)}
-              className="normal"
-            >
-              Встановити нову адресу
-            </Button>
-            {addressTitle && <Text color={"green.300"}>{addressTitle}</Text>}
-          </div>
-        </div>
-      )}
+      {item.month_balance < 100
+        ? null
+        : collapse && (
+            <div className="water__bottom-menu">
+              <Button onClick={() => restartModule(2, item)} className="normal">
+                Перезавантажити GSM MODULE
+              </Button>
+              <Button onClick={() => collectCash(3, item)} className="normal">
+                Collect Cash
+              </Button>
+              <div className="water__bottom-menu-control">
+                <input
+                  type="number"
+                  value={priceForLitter}
+                  onChange={(e) => setPriceForLitter(e.target.value)}
+                />
+                <span>Ціна : 150 = 1.5 грн</span>
+                <Button
+                  onClick={(e) => priceForLiter(4, item, priceForLitter)}
+                  className="normal"
+                >
+                  Встановити ціну за літр
+                </Button>
+              </div>
+              <div
+                className="water__bottom-menu-control"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Номер телефону апарату"
+                  name="machine_phone"
+                  value={formData?.machine_phone}
+                  onChange={changePhoneNumber}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                  }}
+                />
+                <Button
+                  onClick={(e) => changeNumber(7, item, formData.machine_phone)}
+                  className="normal"
+                >
+                  Встановити новий номер телефону
+                </Button>
+                {numberTitle && <Text color={"green.300"}>{numberTitle}</Text>}
+              </div>
+              <div
+                className="water__bottom-menu-control"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <input
+                  type="text"
+                  placeholder="Адреса апарату"
+                  name="address"
+                  value={formData?.address}
+                  onChange={changePhoneNumber}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    whiteSpace: "pre-wrap",
+                  }}
+                />
+                <Button
+                  onClick={(e) => changeAdress(item, formData.address)}
+                  className="normal"
+                >
+                  Встановити нову адресу
+                </Button>
+                {addressTitle && (
+                  <Text color={"green.300"}>{addressTitle}</Text>
+                )}
+              </div>
+              <AcceptMachineBalance
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
+              />
+            </div>
+          )}
     </React.Fragment>
   );
 };

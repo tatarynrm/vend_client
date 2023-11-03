@@ -99,12 +99,14 @@ const Header = () => {
               <Divider />
               <Divider />
               <Divider />
-              <MenuItem>
-                <Box>
-                  <Text>Ваш баланс складає: {userData?.balance} грн</Text>
-                  <Button colorScheme="green">Поповнити баланс</Button>
-                </Box>
-              </MenuItem>
+              <Link to={"/balance-add"}>
+                <MenuItem>
+                  <Box>
+                    <Text>Ваш баланс складає: {userData?.balance} грн</Text>
+                    <Button colorScheme="green">Поповнити баланс</Button>
+                  </Box>
+                </MenuItem>
+              </Link>
               <Divider />
               <Divider />
               <Divider />
