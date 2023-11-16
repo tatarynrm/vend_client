@@ -299,10 +299,24 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
       console.log(error);
     }
   };
+const blockOrUnblockBalance = async (item)=>{
+  console.log(item);
+try {
+if (window.confirm('Заблокувати апарат ?')) {
+  const {data} = await axios.post('/machine/block-machine',{machine_id:item.machine_id});
+  window.location.reload()
+}else {
+  return null
+}
 
+} catch (error) {
+  console.log(error);
+}
+}
   return (
     <React.Fragment>
       <div className="admin__machine-item">
+        <Button onClick={()=>blockOrUnblockBalance(item)} style={{color: item.month_balance >= 100 ? "red":"green"}} fontSize={["8px",'12px','12px','12px']}>{item.month_balance  >= 100 ? "Block" : "Unblock"}</Button>
         <div className="machine__id">{idx + 1}</div>
         <div className="machine__number">{item.machine_id}</div>
         <div>{item.address ? item.address : "Адресу не встановлено"}</div>

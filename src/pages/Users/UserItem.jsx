@@ -60,18 +60,18 @@ const UserItem = ({ item }) => {
       console.log(error);
     }
   };
-const cancelActiveFalse = async (value)=>{
-  try {
-if (window.confirm(`Зняти обмеження з користувача ${item.surname}?`)) {
-  const data = await axios.post('/user/cancel-active',{id:item.id})
-   if (data.status === 200) {
-    window.location.reload()
-   }
-}
-  } catch (error) {
-    console.log(error);
-  }
-}
+// const cancelActiveFalse = async (value)=>{
+//   try {
+// if (window.confirm(`Зняти обмеження з користувача ${item.surname}?`)) {
+//   const data = await axios.post('/user/cancel-active',{id:item.id})
+//    if (data.status === 200) {
+//     window.location.reload()
+//    }
+// }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
   return (
     <React.Fragment>
       <div className={`user user-${item.id}`}>
@@ -92,7 +92,7 @@ if (window.confirm(`Зняти обмеження з користувача ${it
           <Button onClick={() => setCollapse((val) => !val)}>
             {collapse ? "Приховати" : "Переглянути/Змінити"}
           </Button>
-          {item.active === 0 && <Button onClick={()=>cancelActiveFalse(item.id)} colorScheme="red" width={"100%"}>Зняти обмеження</Button>}
+          {/* {item?.active === 0 && <Button onClick={()=>cancelActiveFalse(item.id)} colorScheme="red" width={"100%"}>Зняти обмеження</Button>} */}
         </Stack>
       </div>
 
