@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import "moment/locale/uk";
 import { smsStatusUser } from "../../services/smsServices";
-import { Button, Input } from "@chakra-ui/react";
+import { Box, Button, Input, Stack } from "@chakra-ui/react";
 const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
   const userData = useSelector((state) => state.auth.data);
   const [collapse, setCollapse] = useState(false);
@@ -328,8 +328,8 @@ if (window.confirm('Заблокувати апарат ?')) {
         <div>
           {item.terminal_sim ? item.terminal_sim : "Серв.номер не встановлено"}
         </div>
-        <div>
-          <Button
+        <Box display={'flex'} flexDirection={["column","row"]}>
+          <Button padding={["3px","0px"]}
             onClick={() => {
               setCollapse((val) => !val);
             }}
@@ -343,7 +343,7 @@ if (window.confirm('Заблокувати апарат ?')) {
           >
             {adminFunctions ? "Приховати" : "Сервісні функції"}
           </Button>
-        </div>
+        </Box>
       </div>
       {collapse ? (
         <div className="user__functions">

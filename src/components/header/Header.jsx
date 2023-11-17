@@ -79,7 +79,7 @@ const Header = () => {
 
         {userData ? (
           <Menu>
-            <MenuButton cursor={"pointer"} as={Avatar}>
+            <MenuButton position={["absolute","relative","relative","relative"]} top={['1','0','0','0']} right={["5","0"]} cursor={"pointer"} as={Avatar}>
               {/* {userData?.name?.charAt(0)}.{userData?.surname} */}
             </MenuButton>
             <MenuList>

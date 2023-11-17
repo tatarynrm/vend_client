@@ -111,6 +111,14 @@ flex-direction: column;
  
 }
 
-
+.navigation {
+    margin-top: 20px;
+  .header__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+    // width: 50%;
+}
 
 }
