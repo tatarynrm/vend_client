@@ -18,8 +18,8 @@ const ClientItem = ({ item }) => {
         id:item.id
       });
     }
-  }, []);
-  console.log(item);
+  }, [collapse]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

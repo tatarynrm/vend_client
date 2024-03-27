@@ -18,7 +18,6 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
   const [newAnthillAddress, setNewAnthillAddress] = useState("");
   const [serviceNumber, setServiceNumber] = useState("");
   const [cahngeCompany, setChangeCompany] = useState([]);
-  console.log(item);
   const handlePriceForLiter = (event) => {
     // Ensure the input value is not negative
     const inputValue = event.target.value;
@@ -34,10 +33,11 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
       },
     ]);
   };
-  console.log(cahngeCompany);
+
   const defaultCompany = companies.filter((com, idx) => com.id === item.id);
   useEffect(() => {
     if (item) {
+      console.log('ITEM-USEEFFECT',item);
       setFormData({
         machine_id: item.machine_id,
         address: item.address,
@@ -47,8 +47,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
         company_id: cahngeCompany[0]?.company_id,
       });
     }
-  }, [cahngeCompany]);
-  useEffect(() => {}, []);
+  }, [collapse]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -64,6 +63,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
       console.log(error);
     }
   };
+console.log('ADMINMACHINEITEM',item);
   const deleteMachine = async (item) => {
     try {
       if (window.confirm("Видалити апарат?")) {
@@ -313,6 +313,7 @@ if (window.confirm('Заблокувати апарат ?')) {
   console.log(error);
 }
 }
+console.log('FORMDATA',formData);
   return (
     <React.Fragment>
       <div className="admin__machine-item">

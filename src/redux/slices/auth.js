@@ -23,8 +23,16 @@ export const fetchAuth = createAsyncThunk(
   export const fetchAuthMe = createAsyncThunk(
     "auth/fetchAuthMe",
     async (params) => {
-      const { data } = await axios.get("/auth/me", params);
+      try {
+        const { data } = await axios.get("/auth/me", params);
+      console.log('DATAAAAAAAAAAAA',data);
       return data;
+      } catch (error) {
+        if (error.response.status === 403) {
+          localStorage.clear()
+        }
+
+      }
     }
   );
   const initialState = {

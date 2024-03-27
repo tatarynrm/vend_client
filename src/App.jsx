@@ -22,6 +22,7 @@ function App() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.data);
+console.log('USERDATA',userData);
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, []);

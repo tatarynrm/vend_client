@@ -6,14 +6,14 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const userData = useSelector((state) => state.auth.data);
-  console.log(userData);
+
   const [users, setUsers] = useState([]);
   const [allMachines, setAllMachines] = useState([]);
   const [companies, setCompanies] = useState([]);
   const getAllUsers = async () => {
     try {
       const data = await axios("/user");
-      console.log(data.data);
+  
       if (data.status === 200) {
         setUsers(data.data);
       }
@@ -24,7 +24,7 @@ const Home = () => {
   const getAllMachines = async () => {
     try {
       const data = await axios.get("/machine/all");
-      console.log(data);
+    
       if (data.status === 200) {
         setAllMachines(data.data);
       }
@@ -35,7 +35,7 @@ const Home = () => {
   const getAllCompanies = async () => {
     try {
       const data = await axios.get("/client");
-      console.log(data);
+   
       if (data.status === 200) {
         setCompanies(data.data);
       }
@@ -54,7 +54,7 @@ const Home = () => {
   useEffect(() => {
     getAllCompanies();
   }, []);
-  console.log(allMachines);
+
   return (
     <div className="home page">
       <div className="home__inner container"></div>

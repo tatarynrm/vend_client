@@ -35,7 +35,7 @@ const UserItem = ({ item }) => {
         id: item.id,
       });
     }
-  }, []);
+  }, [collapse]);
   const editUser = async () => {
     try {
       const data = await axios.post("/user/update", formData);

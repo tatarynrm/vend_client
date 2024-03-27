@@ -219,7 +219,7 @@ const MachineItem = ({ item, setSmsStatusInfo }) => {
     }
   }, [addressTitle, numberTitle]);
 
-  console.log(item);
+
   return (
     <React.Fragment>
       <div className="water__machine">
