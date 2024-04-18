@@ -2,6 +2,7 @@ import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SiteMachineItem from "./SiteMachineItem";
+import './Site.scss'
 
 const Site = () => {
   const [machines, setMachines] = useState([]);
@@ -52,8 +53,8 @@ const Site = () => {
       <Box display={"flex"} justifyContent={"center"}>
         <Text fontWeight={"bold"}>Адміністрування сайтом vendwater.com.ua</Text>
       </Box>
-      <Box className="container" display={'flex'} gap={10}>
-        <Input name="phone_number" placeholder="Вкажіть актуальний номер телефону" width={'20%'} value={contactBtn.phone_number} onChange={handleInputChange} />
+      <Box flexDirection={['column','row']} className="container phone_change" display={'flex'} gap={10}>
+        <Input name="phone_number" placeholder="Вкажіть актуальний номер телефону"  value={contactBtn.phone_number} onChange={handleInputChange} />
         <Button colorScheme="blue" onClick={updatePhone}>Змінити номер</Button>
       </Box>
       <Flex

@@ -52,7 +52,7 @@ const Header = () => {
         {userData ? (
           <div className="navigation">
             {userData?.role === 1 ? (
-              <div className="header__menu header__menu-admin">
+              <Box display={'flex'} flexDirection={['column','row']} className="header__menu header__menu-admin">
                 <NavLink to={"/site"}>
                   <Button>Сайт</Button>
                 </NavLink>
@@ -68,7 +68,7 @@ const Header = () => {
                 <NavLink to={"/sms"}>
                   <Button>SMS</Button>
                 </NavLink>
-              </div>
+              </Box>
             ) : (
               <div className="header__menu header__menu-user">
                 <NavLink to={"/my-machines"}>
