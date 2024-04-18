@@ -53,6 +53,9 @@ const Header = () => {
           <div className="navigation">
             {userData?.role === 1 ? (
               <div className="header__menu header__menu-admin">
+                <NavLink to={"/site"}>
+                  <Button>Сайт</Button>
+                </NavLink>
                 <NavLink to={"/users"}>
                   <Button>Користувачі</Button>
                 </NavLink>

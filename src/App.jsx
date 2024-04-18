@@ -17,12 +17,13 @@ import Machines from "./pages/Machines/Machines";
 import LiqPayForm from "./components/liqpay_button/LiqPayForm";
 import PaymentSuccess from "./pages/Payment/PaymentSuccess";
 import BalanceAdd from "./pages/BalanceAdd/BalanceAdd";
+import Site from "./pages/Site/Site";
 
 function App() {
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.data);
-console.log('USERDATA',userData);
+
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, []);
@@ -43,6 +44,8 @@ console.log('USERDATA',userData);
               <Route path="/clients" element={<Clients />} />
               <Route path="/sms" element={<SmsPage />} />
               <Route path="/machines" element={<AdminMachines />} />
+              <Route path="/site" element={<Site />} />
+
             </>
           ) : (
             <>

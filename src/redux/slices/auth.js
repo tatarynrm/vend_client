@@ -25,7 +25,6 @@ export const fetchAuth = createAsyncThunk(
     async (params) => {
       try {
         const { data } = await axios.get("/auth/me", params);
-      console.log('DATAAAAAAAAAAAA',data);
       return data;
       } catch (error) {
         if (error.response.status === 403) {
