@@ -47,7 +47,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
         company_id: cahngeCompany[0]?.company_id,
       });
     }
-  }, [collapse]);
+  }, [collapse,cahngeCompany]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -63,7 +63,7 @@ const AdminMachineItem = ({ item, idx, setSmsStatusInfo, companies }) => {
       console.log(error);
     }
   };
-console.log('ADMINMACHINEITEM',item);
+console.log('cahngeCompany',cahngeCompany);
   const deleteMachine = async (item) => {
     try {
       if (window.confirm("Видалити апарат?")) {
