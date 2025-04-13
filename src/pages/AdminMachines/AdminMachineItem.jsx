@@ -196,7 +196,7 @@ console.log('cahngeCompany',cahngeCompany);
           data: {
             smsType: smsStatusUser(smsStatus),
             smsInfo,
-            pin: pin,
+            pin: +pin,
             userData,
           },
         });
@@ -256,6 +256,8 @@ console.log('cahngeCompany',cahngeCompany);
     }
   };
   const changeAddress = async (smsStatus, smsInfo, newAnthillAddress) => {
+    console.log(newAnthillAddress);
+    
     try {
       if (window.confirm(`Встановити токен?`)) {
         const result = await axios.post("/msg/change-address", {
@@ -264,9 +266,7 @@ console.log('cahngeCompany',cahngeCompany);
             smsInfo,
             userData,
             newAnthillAddress:
-              newAnthillAddress !== ""
-                ? newAnthillAddress
-                : smsInfo.machine_address,
+              newAnthillAddress 
           },
         });
         console.log(result.data[0]);
@@ -449,9 +449,11 @@ console.log('FORMDATA',formData);
           <div className="form__control">
             <Input
               type="text"
-              defaultValue={item.machine_pin}
-              onChange={(e) => setNewPin(e.target.value)}
+              // defaultValue={+item?.machine_pin}
+              onChange={(e) => setNewPin(+e.target.value)}
             />
+            <span>Поточний пін код : {item?.machine_pin}</span>
+            <br />
             <Button onClick={() => changePin(5, item, newPin)}>
               Змінити пін
             </Button>
@@ -484,7 +486,7 @@ console.log('FORMDATA',formData);
               type="text"
               placeholder="ANTHILL ADDRES"
               defaultValue={item.machine_address}
-              onChange={(e) => setNewAnthillAddress(+e.target.value)}
+              onChange={(e) => setNewAnthillAddress(Number(e.target.value))}
             />
             <Button onClick={() => changeAddress(9, item, newAnthillAddress)}>
               Змінити ADR
